@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2003 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.
@@ -20,8 +20,8 @@ namespace DeltaForth
 	/// 
 	/// Class ForthSyntacticAnalyzer
 	/// 
-	/// Date of creation:		Wednesday, September  5, 2001
-	/// Date of last update:	Tuesday, October	9, 2001
+	/// Date of creation:		Wednesday,	September 5, 2001
+	/// Date of last update:	Saturday,	October	 18, 2003
 	/// 
 	/// Description:
 	/// </summary>
@@ -44,7 +44,7 @@ namespace DeltaForth
 	
 		private string[] ReservedWords = new string[] {"@", "?", "!", "+!", "DUP", "-DUP", "DROP",
 														"SWAP", "OVER", "ROT", ".", "+", "-", "*",
-														"/", ">R", "R>", "I", "MOD", "/MOD", "*/",
+														"/", ">R", "R>", "I", "I'", "J", "MOD", "/MOD", "*/",
 														"*/MOD", "MINUS", "ABS", "MIN", "MAX", "1+",
 														"2+", "0=", "0<", "=", "<", ">", "<>", "AND",
 														"OR", "XOR", "EMIT", "CR", "SPACE", "SPACES",

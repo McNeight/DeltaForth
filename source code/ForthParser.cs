@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2003 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.

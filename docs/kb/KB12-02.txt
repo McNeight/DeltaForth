@@ -1,0 +1,18 @@
+The information in this article applies to:
+	Delta Forth .NET 1.2
+----
+
+SYMPTOMS:
+Constructors are not called in the C# Library1 sample file.
+
+CAUSE:
+The C# constructors are not declared static so they are only called when
+the class is instantiated, which never actually happens. Since only static
+methods can be called from the Delta Forth .NET system, constructors must be
+declared static in order them to be called.
+
+STATUS:
+Fixed in version 1.3
+
+
+Last reviewed: October 18, 2003

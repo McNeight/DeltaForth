@@ -1,9 +1,9 @@
 
-  Delta Forth .NET Compiler, Version 1.2
-  Copyright (C)1997-2002 Valer BOCAN (http://www.dataman.ro)
+  Delta Forth .NET Compiler, Version 1.3
+  Copyright (C)1997-2004 Valer BOCAN (http://www.dataman.ro)
   All Rights Reserved.
 
-  Released: May 13, 2003
+  Released: September 23, 2004
 
   * The Delta Forth .NET source code has been written entirely in C# and has
   approximately 4000 lines.

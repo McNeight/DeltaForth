@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2003 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.
@@ -50,7 +50,7 @@ namespace DeltaForth
 	/// Class ForthCodeGenerator
 	/// 
 	/// Date of creation:		Wednesday,	September 12, 2001
-	/// Date of last update:	Wednesday,	April     30, 2003
+	/// Date of last update:	Saturday,	October   18, 2003
 	/// 
 	/// Description:
 	/// </summary>
@@ -526,9 +526,21 @@ namespace DeltaForth
 					case "EMIT":	// Emit
 						_Emit(MethodILGen);
 						break;
-					case ".":	
-						MethodILGen.Emit(OpCodes.Ldsfld, ForthStack);			
-						MethodILGen.Emit(OpCodes.Ldsfld, ForthStackIndex);	
+					case ".":
+						// October 18, 2003
+						// Added stack bounds verification for the . word
+						if(bCheckStack)
+						{
+							Label lb1 = MethodILGen.DefineLabel();
+							MethodILGen.Emit(OpCodes.Ldsfld, ForthStackIndex);
+							MethodILGen.Emit(OpCodes.Ldc_I4, ForthStackOrigin);
+							MethodILGen.Emit(OpCodes.Bgt_S, lb1);
+							// Throw exception (stack underflow)
+							MethodILGen.ThrowException(typeof(System.IndexOutOfRangeException));
+							MethodILGen.MarkLabel(lb1);
+						}
+						MethodILGen.Emit(OpCodes.Ldsfld, ForthStack);
+						MethodILGen.Emit(OpCodes.Ldsfld, ForthStackIndex);
 						MethodILGen.Emit(OpCodes.Ldc_I4_1);
 						MethodILGen.Emit(OpCodes.Sub);
 						MethodILGen.Emit(OpCodes.Dup);
@@ -579,6 +591,12 @@ namespace DeltaForth
 						break;
 					case "I":
 						_I(MethodILGen);
+						break;
+					case "I'":
+						_Isecond(MethodILGen);
+						break;
+					case "J":
+						_J(MethodILGen);
 						break;
 					case "FILL":
 						_Fill(MethodILGen);
@@ -2142,7 +2160,7 @@ namespace DeltaForth
 			ilgen.Emit(OpCodes.Stelem_I4);
 		}
 
-		// _I - Copies the element from the return stack to the Forth stack
+		// _I - Copies the top element from the return stack to the Forth stack
 		// Input:  ILGenerator for the method
 		//		ForthStack[ForthStackIndex++] = ReturnStack[ReturnStackIndex - 1];
 		// Output: None
@@ -2157,6 +2175,46 @@ namespace DeltaForth
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStack);
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
 			ilgen.Emit(OpCodes.Ldc_I4_1);
+			ilgen.Emit(OpCodes.Sub);
+			ilgen.Emit(OpCodes.Ldelem_I4);
+			ilgen.Emit(OpCodes.Stelem_I4);
+		}
+
+		// _Isecond - Copies the second top element from the return stack to the Forth stack
+		// Input:  ILGenerator for the method
+		//		ForthStack[ForthStackIndex++] = ReturnStack[ReturnStackIndex - 2];
+		// Output: None
+		private void _Isecond(ILGenerator ilgen)
+		{
+			ilgen.Emit(OpCodes.Ldsfld, ForthStack);
+			ilgen.Emit(OpCodes.Ldsfld, ForthStackIndex);
+			ilgen.Emit(OpCodes.Dup);
+			ilgen.Emit(OpCodes.Ldc_I4_1);
+			ilgen.Emit(OpCodes.Add);
+			ilgen.Emit(OpCodes.Stsfld, ForthStackIndex);
+			ilgen.Emit(OpCodes.Ldsfld, ReturnStack);
+			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
+			ilgen.Emit(OpCodes.Ldc_I4_2);
+			ilgen.Emit(OpCodes.Sub);
+			ilgen.Emit(OpCodes.Ldelem_I4);
+			ilgen.Emit(OpCodes.Stelem_I4);
+		}
+
+		// _J - Copies the third top element from the return stack to the Forth stack
+		// Input:  ILGenerator for the method
+		//		ForthStack[ForthStackIndex++] = ReturnStack[ReturnStackIndex - 3];
+		// Output: None
+		private void _J(ILGenerator ilgen)
+		{
+			ilgen.Emit(OpCodes.Ldsfld, ForthStack);
+			ilgen.Emit(OpCodes.Ldsfld, ForthStackIndex);
+			ilgen.Emit(OpCodes.Dup);
+			ilgen.Emit(OpCodes.Ldc_I4_1);
+			ilgen.Emit(OpCodes.Add);
+			ilgen.Emit(OpCodes.Stsfld, ForthStackIndex);
+			ilgen.Emit(OpCodes.Ldsfld, ReturnStack);
+			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
+			ilgen.Emit(OpCodes.Ldc_I4_3);
 			ilgen.Emit(OpCodes.Sub);
 			ilgen.Emit(OpCodes.Ldelem_I4);
 			ilgen.Emit(OpCodes.Stelem_I4);
@@ -2903,10 +2961,13 @@ namespace DeltaForth
 				extCallerILGen.EmitWriteLine("\n\rRUNTIME ERROR: Could not load library.");
 				extCallerILGen.Emit(OpCodes.Br_S, lb2);
 				extCallerILGen.MarkLabel(lb1);
+				
+				// Obtain the method with the name contained in the second parameter
 				extCallerILGen.Emit(OpCodes.Ldsfld, calType);
 				extCallerILGen.Emit(OpCodes.Ldarg_2);
 				extCallerILGen.Emit(OpCodes.Callvirt, typeof(System.Type).GetMethod("GetMethod", new Type[] { typeof(String) }));
 				extCallerILGen.Emit(OpCodes.Stsfld, calMethodInfo);
+				// aici am obtinut numele metodei
 				extCallerILGen.Emit(OpCodes.Ldsfld, calMethodInfo);
 				extCallerILGen.Emit(OpCodes.Brtrue_S, lb3);
 				extCallerILGen.EmitWriteLine("\n\rRUNTIME ERROR: Could not call external method.");
@@ -2923,7 +2984,19 @@ namespace DeltaForth
 				extCallerILGen.MarkLabel(lb4);
 				extCallerILGen.Emit(OpCodes.Ldsfld, calMethodInfo);
 				extCallerILGen.Emit(OpCodes.Ldnull);
-				extCallerILGen.Emit(OpCodes.Ldnull);
+				/*
+				 * Versions prior to 1.3 called functions with no parameters
+				 * extCallerILGen.Emit(OpCodes.Ldnull);
+				 */
+				// creaza 
+				extCallerILGen.Emit(OpCodes.Ldc_I4_1);
+				extCallerILGen.Emit(OpCodes.Newarr, typeof(string));
+				extCallerILGen.Emit(OpCodes.Dup);
+				extCallerILGen.Emit(OpCodes.Ldc_I4_0);
+				extCallerILGen.Emit(OpCodes.Ldstr, "Geee!!!!");
+				extCallerILGen.Emit(OpCodes.Stelem_Ref);
+				// aici am obtinut arrayul de stringuri (1)
+
 				extCallerILGen.Emit(OpCodes.Callvirt, typeof(System.Reflection.MethodBase).GetMethod("Invoke", new Type[] {	typeof(Object), typeof(Object[]) }));
 				extCallerILGen.Emit(OpCodes.Stsfld, calInstance);
 				extCallerILGen.BeginCatchBlock(typeof(System.IO.FileNotFoundException));

@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2003 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.
@@ -14,9 +14,6 @@ using System.IO;
 
 namespace DeltaForth
 {
-	/// <summary>
-	/// Summary description for SystemLauncher.
-	/// </summary>
 	class SystemLauncher
 	{
 		// Compiler command-line options
@@ -29,8 +26,8 @@ namespace DeltaForth
 
 		static void DisplayLogo()
 		{
-			Console.WriteLine("Delta Forth .NET Compiler, Version 1.2");
-			Console.WriteLine("Copyright (C)1997-2003 Valer BOCAN (http://www.dataman.ro).\n\rAll Rights Reserved.\n\r");
+			Console.WriteLine("Delta Forth .NET Compiler, Version 1.3");
+			Console.WriteLine("Copyright (C)1997-2004 Valer BOCAN (http://www.dataman.ro).\n\rAll Rights Reserved.\n\r");
 		}
 
 		static void Usage()
@@ -337,8 +334,8 @@ namespace DeltaForth
 			ts1 = (DateTime.Now - dtStart);
 			if(!bQuiet) 
 			{
-				if(bClock) Console.WriteLine("Done in {0} ms", ts1.Milliseconds);
-				else Console.WriteLine("Done");
+				if(bClock) Console.WriteLine("Done in {0} ms.", ts1.Milliseconds);
+				else Console.WriteLine("Done.");
 			}
 			SourceAtoms = fp.SourceAtoms;
 			// Perform a syntactic analysis of the source atoms
@@ -347,8 +344,8 @@ namespace DeltaForth
 			ts2 = (DateTime.Now - dtStart);
 			if(!bQuiet) 
 			{
-				if(bClock) Console.WriteLine("Done in {0} ms", ts2.Milliseconds);
-				else Console.WriteLine("Done");
+				if(bClock) Console.WriteLine("Done in {0} ms.", ts2.Milliseconds);
+				else Console.WriteLine("Done.");
 			}
 			fsa.GetMetaData(out LibraryName, out GlobalConstants, out GlobalVariables, out LocalVariables, out Words, out ExternalWords);
 			// Generate code
@@ -364,12 +361,12 @@ namespace DeltaForth
 			ts3 = (DateTime.Now - dtStart);
 			if(!bQuiet) 
 			{
-				if(bClock) Console.WriteLine("Done in {0} ms", ts3.Milliseconds);
-				else Console.WriteLine("Done");
+				if(bClock) Console.WriteLine("Done in {0} ms.", ts3.Milliseconds);
+				else Console.WriteLine("Done.");
 			}
 			if(!bQuiet) 
 			{
-				if(bClock) Console.WriteLine("Total compiling time:\t  {0} ms", ts1.Milliseconds + ts2.Milliseconds + ts3.Milliseconds);
+				if(bClock) Console.WriteLine("Total compiling time:\t  {0} ms.", ts1.Milliseconds + ts2.Milliseconds + ts3.Milliseconds);
 				Console.WriteLine();
 				if(GlobalConstants.Count > 0) Console.WriteLine("Constants:\t\t{0}", GlobalConstants.Count);
 				if(GlobalVariables.Count > 0) Console.WriteLine("Global variables:\t{0}", GlobalVariables.Count);

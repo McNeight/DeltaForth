@@ -1,0 +1,23 @@
+The information in this article applies to:
+	Delta Forth .NET 1.2
+----
+
+SYMPTOMS:
+No stack underflow is performed for the . (DOT) word.
+
+Try this little program:
+
+variable x
+: main
+.
+;
+
+The program either throws an exception or simply displays 0, which is incorrect.
+
+CAUSE:
+Stack undeflow code is absent.
+
+STATUS:
+Fixed in version 1.3
+
+Last reviewed: October 18, 2003

@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForthLibrary", "ForthLibrary.csproj", "{0B11B75D-772D-45FC-8FC3-30390919518A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{0B11B75D-772D-45FC-8FC3-30390919518A}.Debug.ActiveCfg = Debug|.NET
+		{0B11B75D-772D-45FC-8FC3-30390919518A}.Debug.Build.0 = Debug|.NET
+		{0B11B75D-772D-45FC-8FC3-30390919518A}.Release.ActiveCfg = Release|.NET
+		{0B11B75D-772D-45FC-8FC3-30390919518A}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

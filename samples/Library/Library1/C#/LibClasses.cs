@@ -7,11 +7,9 @@ namespace Library1
 	/// </summary>
 	public class Class1
 	{
-		public Class1()
+		static Class1()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
+			Console.WriteLine("This is the constructor of the Class1 class.");
 		}
 
 		public static void DisplayLogo()
@@ -20,16 +18,11 @@ namespace Library1
 		}
 	}
 
-	/// <summary>
-	/// Summary description for Class1.
-	/// </summary>
 	public class Class2
 	{
-		public Class2()
+		static Class2()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
+			Console.WriteLine("This is the constructor of the Class2 class.");
 		}
 
 		public static void DisplayRandom()
