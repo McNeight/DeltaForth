@@ -1,4 +1,9 @@
-* Delta Forth .NET 1.0 Release
+* Delta Forth .NET 1.1
+a) Fixed bugs described in articles KB10-01, KB10-02
+b) Added the Permutation sample to show how to implement
+   backtracking in Forth
+
+* Delta Forth .NET 1.0
 a) Fixed bugs described in articles KB10B2A-01, KB10B2A-02
 b) Added the /FS, /RS and /MAP command-line options
 c) Added enhanced library samples

@@ -1,0 +1,15 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0
+----
+
+SYMPTOMS:
+Nested DO-LOOP/+LOOP constructs behave abnormally.
+
+CAUSE:
+LOOP/+LOOP and LEAVE do not clean up the return stack upon leaving the loop.
+
+STATUS:
+Fixed in version 1.1
+
+
+Last reviewed: April 2, 2002
