@@ -1,0 +1,18 @@
+* Delta Forth .NET Beta 2
+
+a) Fixed bugs described in articles KB10B1-01, KB10B1-02, KB10B1-03
+b) Added the ability to call external words
+c) The samples are now pre-compiled, so you can see the effect without bothering
+	about the compiler itself
+
+* Delta Forth .NET Changes over the Java version
+
+a) Comments do not require space after ( or \ or before )
+b) The text display operator does not require a space after ."
+c) Constants can be either strings or integers
+d) DUMP primitive changed to "<text>" or string variable
+e) When declaring local variables, use VARIABLE instead of LOCAL
+f) Traditional Forth conversion words changed to int2str and str2int
+g) As of now, there's no ?TERMINAL (query-terminal) primitive implemented
+h) Identifiers should not begin with a figure and be less than 31 chars long
+i) The "fetch" primitive is now @ (was C)

@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: RPNConv
-Created-By: Valer BOCAN <vbocan@dataman.ro>
-
-Name: RPNConv.class
-
-Name: RPNProc.class
-
-Name: RPNParser.class

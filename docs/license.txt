@@ -1,0 +1,37 @@
+Delta Forth .NET
+
+END-USER LICENSE AGREEMENT
+
+IMPORTANT-READ CAREFULLY: This End-User License Agreement (EULA) is a legal agreement between you (either an individual or a single entity) and Valer BOCAN for the Delta Forth .NET software product and any accompanying electronic documentation (SOFTWARE PRODUCT or SOFTWARE). By installing, copying, or otherwise using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA. If you do not agree to the terms of this EULA, you are not authorized to use the SOFTWARE PRODUCT.
+
+Delta Forth .NET LICENSE: The SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. The SOFTWARE PRODUCT is licensed, not sold.
+
+1. GRANT OF LICENSE
+
+The author (Valer BOCAN) grants to you as an individual, a personal, non-exclusive, license to install and use one copy of the SOFTWARE on a single personal computer. The author may have patents or pending patent applications, trademarks, copyrights, or other intellectual property rights covering the SOFTWARE PRODUCT. You are not granted any license to these patents, trademarks, copyrights, or other intellectual property rights except as expressly provided herein. The author reserves all rights not expressly granted.
+
+2. COPYRIGHT
+
+All title and copyrights in and to the SOFTWARE PRODUCT (including but not limited to any images, photographs, animations, video, audio, music, text, and applets, incorporated into the SOFTWARE PRODUCT), the accompanying printed materials, and any copies of the SOFTWARE PRODUCT, are owned by Valer BOCAN. The SOFTWARE PRODUCT is protected by copyright laws and international treaty provisions. Therefore, you must treat the SOFTWARE PRODUCT like any other copyrighted material except that you may either (a) make one copy of the SOFTWARE PRODUCT solely for backup or archival purposes, or (b) install the SOFTWARE PRODUCT on a single computer provided you keep the original solely for backup or archival purposes.
+
+3. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS
+
+You may permanently transfer all of your rights under this EULA, provided you retain no copies, you transfer all of the SOFTWARE PRODUCT (including all component parts, all accompanying electronic documentation, and this EULA), and the recipient agrees to the terms of this EULA.
+
+You may not rent or lease the SOFTWARE PRODUCT nor you may sell any derivative work you might produce.
+
+The SOFTWARE PRODUCT is licensed as a single product. Its component parts may not be separated for use by more than one user.
+
+Without prejudice to any other rights, the author (Valer BOCAN) may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the SOFTWARE PRODUCT and all of its component parts.
+
+4. NO WARRANTIES
+
+THE SOFTWARE PRODUCT IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND. ANY USE OF THE SOFTWARE PRODUCT IS AT YOUR OWN RISK. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHOR DISCLAIMS ALL WARRANTIES, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AND ANY WARRANTY AGAINST INFRINGEMENT, WITH REGARD TO THE SOFTWARE PRODUCT.
+
+5. NO LIABILITY FOR CONSEQUENTIAL DAMAGES
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THIS PRODUCT, EVEN IF THE AUTHOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. BECAUSE SOME STATES/JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU.
+
+6. LIMITATION OF LIABILITY
+
+AUTHOR'S ENTIRE LIABILITY AND YOUR EXCLUSIVE REMEDY UNDER THIS EULA SHALL NOT EXCEED ONE DOLLAR (US$1.00).

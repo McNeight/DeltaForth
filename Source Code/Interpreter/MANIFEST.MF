@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: Interpret
-Created-By: Valer BOCAN <vbocan@dataman.ro>
-
-Name: Interpret.class
-
-Name: TForthException.class
-
-Name: TForthEngine.class
