@@ -1,0 +1,57 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>JAVA Libraries</title>
+</head>
+
+<body background="back.gif">
+
+<h1><a name="top"><small><font face="Verdana">JAVA Libraries</font></small></a></h1>
+
+<hr>
+
+<p><small><font face="Verdana">Version 0.8 of the DELTA Forth system introduces the
+concept of external libraries. Although well-known in other programming environments,
+Forth did not have its own library system, up until recently. Using external JAVA
+libraries, DELTA Forth can virtually do anything.</font></small></p>
+
+<p><small><font face="Verdana">To create a JAVA library, follow these steps:</font></small></p>
+
+<blockquote>
+  <p><strong><small><font face="Verdana">1. Create a 4th file in which you declare the words
+  of the library as externals.</font></small></strong></p>
+  <p><small><font face="Verdana">Example:</font></small></p>
+  <blockquote>
+    <p><small><font face="Verdana">EXTERNAL FOPEN IO&nbsp;&nbsp;&nbsp; \ Declares the external
+    word FOPEN in library IO</font></small></p>
+  </blockquote>
+  <p><strong><small><font face="Verdana">2. Write the corresponding Java functions.</font></small></strong></p>
+  <p><small><font face="Verdana">Example:</font></small></p>
+  <blockquote>
+    <p><small><font face="Verdana">class IO {</font></small></p>
+    <blockquote>
+      <p><small><font face="Verdana">public void FOPEN(int Memory[], int P[]) {</font></small></p>
+      <p><small><font face="Verdana">// write your code here</font></small></p>
+      <p><small><font face="Verdana">}</font></small></p>
+    </blockquote>
+    <p><small><font face="Verdana">}<br>
+    The Memory[] array gives you access to the DELTA Forth addressable space. P[0] contains
+    the SP system variable and P[1] contains the RP system variable. If you modify these
+    parameters, the changes will be transmitted to the Forth engine accordingly.</font></small></p>
+  </blockquote>
+  <p><strong><small><font face="Verdana">3. Compile the Java code and place the generated
+  CLASS file where the interpreter can find it (usually own directory).</font></small></strong></p>
+  <p><strong><small><font face="Verdana">4. Write your Forth code, including the
+  declarations with a LOAD directive (see example for details).</font></small></strong></p>
+</blockquote>
+
+<p align="center"><font face="Verdana" color="#FF0000"><strong>IMPORTANT!</strong></font></p>
+
+<p align="center"><font face="Verdana" color="#FF0000"><strong>The names of Java classes
+and member functions are required to be written in uppercase.</strong></font></p>
+
+<p><small><font face="Verdana"><img src="violet.gif" align="middle" width="40" height="40">&nbsp;&nbsp;&nbsp;
+<a href="index.htm">Back to main page</a></font></small></p>
+</body>
+</html>

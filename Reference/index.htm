@@ -5,158 +5,201 @@
 <title>DELTA Forth</title>
 </head>
 
-<body background="images/back.gif">
+<body background="back.gif">
 
-<h1 align="center"><big><big>DELTA Forth</big></big></h1>
+<p align="center"><img src="delta.gif" alt="DELTA Forth 0.8 Alpha" start="mouseover"
+width="680" height="92"></p>
 
-<h3 align="center">Version 0.5 Alpha</h3>
+<p align="center"><strong><font face="Verdana">(C)1997 - 1999 <a
+href="mailto:vbocan@usa.net?subject=DELTA Forth Reference">Valer BOCAN</a></font></strong></p>
 
-<p align="center">(C)1997 - 1998 <a
-href="mailto:vbocan@usa.net?subject=DELTA Forth Reference">Valer BOCAN</a></p>
-
-<p align="center">All Rights Reserved</p>
-
-<hr>
-
-<blockquote>
-  <h1>DELTA Forth Basics</h1>
-</blockquote>
-
-<p><big>DELTA Forth is a new Forth dialect and is intended to bring the Forth programming
-language to the Java world. As everyone knows, Forth is a special concept in the world of
-programmers. It has been ported to several configurations, starting with the old CP/M and
-Z80 processor and now ending with Java. DELTA Forth is designed with portability in mind.
-You will be capable of running Forth code in any Java environment. Despite its
-flexibility, Forth did not prove flexible enough to be ported to new systems such as
-32-bit configurations. DELTA Forth is a new dialect of Forth that removes some unnecessary
-concepts and adds the power of portability. This document assumes that you are familiar
-with the Forth programming language in general. Changes and new specifications are
-described here.</big></p>
-
-<p><big>The most important change is the way DELTA Forth handles memory: Each memory cell
-is 32-bit wide and the total amount of memory available is 1048576 cells (4Mb in all). A
-memory cell can store either an integer value or an address. Unlike Forth, DELTA Forth is
-a compiled language. This means that the source code is turned into a special format that
-is used to execute the program and many concepts in Forth have been removed due to this
-major change. Thus, words like COMPILE and BUILDS or DOES have disappeared. Instead, DELTA
-Forth introduces a C-style convention, namely the execution begins with the MAIN word. If
-the source file does not contain the word MAIN, an error is reported and the compiling is
-halted. There are few things you can do outside words: defining variables, constants and
-including other source files. If the compiler encounters a number, it will not be placed
-on the stack but stored for later reference.</big></p>
-
-<blockquote>
-  <h1>DELTA Forth vs. Other Forth Systems</h1>
-</blockquote>
-
-<p><big>Because DELTA Forth has dropped many concepts found in other Forth systems, it
-might not be fully compatible at the source level. This is mainly because DELTA Forth uses
-the <em>compiled code</em> approach, whilst other don't. At least for the moment, this
-dialect is not suitable for large projects as it lacks many features found in modern
-programming. With the help of users, this can become a reliable tool for writing
-platform-independent applications.</big></p>
-
-<p><img src="images/idea.gif" width="80" height="45" alt="AG00039_.gif (3587 bytes)"
-align="middle"><font size="4">&nbsp;&nbsp;&nbsp; <a href="ideas.htm">Ideas for an Enhanced
-and Modernized Dialect of Forth</a></font></p>
-
-<p><big>This is a document from <a href="mailto:mvanier@bbb.caltech.edu">Michael Vanier</a>,
-describing a potential major change in the Forth specification.</big></p>
+<p align="center"><small><font face="Verdana">All Rights Reserved</font></small></p>
 
 <hr>
 
 <blockquote>
-  <h1>DELTA Forth Reference</h1>
+  <h1><small><font face="Verdana">DELTA Forth Basics</font></small></h1>
 </blockquote>
+
+<p><small><font face="Verdana">DELTA Forth is a new Forth dialect and is intended to bring
+the Forth programming language to the Java world. As everyone knows, Forth is a special
+concept in the world of programmers. It has been ported to several platphorms, starting
+with the old CP/M and Z80 processor and now ending with Java. DELTA Forth is designed with
+portability in mind. You will be capable of running Forth code in any Java environment.
+Despite its flexibility, the original Forth did not prove flexible enough to be ported to
+new systems such as a 32-bit OS. DELTA Forth is a new dialect of Forth that removes some
+obsolete concepts and adds the power of portability and extensibility. This document
+assumes that you are familiar with the Forth programming language in general. Changes and
+new specifications are described here.</font></small></p>
+
+<p><small><font face="Verdana">The most important change is the way DELTA Forth handles
+memory: Each memory cell is 32-bit wide and the total amount of memory available is
+1048576 cells (4Mb in all). A memory cell can store either an integer value or an address.
+Unlike Forth, DELTA Forth is a compiled language. This means that the source code is
+turned into a special format that is used to execute the program and many concepts in
+Forth have been removed due to this major change. Thus, words like COMPILE and BUILDS or
+DOES have disappeared. Instead, DELTA Forth introduces a C-style convention, namely the
+execution begins with the MAIN word. If the source file does not contain the word MAIN, an
+error is reported and the compiling is halted. There are few things you can do outside
+words: defining variables, constants and including other source files. If the compiler
+encounters a number, it will not be placed on the stack but stored for later reference.</font></small></p>
+
+<blockquote>
+  <h1><small><font face="Verdana">DELTA Forth vs. Other Forth Systems</font></small></h1>
+</blockquote>
+
+<p><small><font face="Verdana">DELTA Forth has dropped many concepts found in other Forth
+systems, therefore it might not be fully compatible at source level. This is mainly
+because DELTA Forth uses the <em>compiled code</em> approach, whilst other don't. At least
+for the moment, this dialect is not suitable for large projects as it lacks features of
+modern programming. With user's help, this can become a reliable tool for writing
+platform-independent applications.</font></small></p>
+
+<p><font face="Verdana"><small><small><img src="idea.gif" alt="AG00039_.gif (3587 bytes)"
+align="middle" width="96" height="54"></small></small><font size="2">&nbsp;&nbsp;&nbsp; <a
+href="ideas.htm">Ideas for an Enhanced and Modernized Dialect of Forth</a></font></font></p>
+
+<p><small><font face="Verdana">This is a document from <a
+href="mailto:mvanier@bbb.caltech.edu">Michael Vanier</a>, describing a potential major
+change in the Forth specification.</font></small></p>
+
+<hr>
+
+<h1><strong><font face="Verdana"><big><big>&nbsp;</big></big><small>&nbsp;&nbsp; What's
+New</small></font></strong></h1>
 
 <blockquote>
   <blockquote>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="memory.htm">Memory Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="arith.htm">Arithmetic Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="logic.htm">Logical Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="stack.htm">Stack Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="retstack.htm">Return Stack Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="cstruct.htm">Control Structures</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="convar.htm">Constants and Variables</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="display.htm">Display Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="keyb.htm">Keyboard Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="string.htm">String Operations</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="system.htm">System Variables</a></big></p>
-    <p><big><img src="images/hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
-    href="source.htm">Source Files Prerequisites</a></big></p>
+    <ul>
+      <li><small><font face="Verdana">You can easily place texts in memory using the woord <strong>DUMP</strong>.
+        It requires that the destination address be on the stack.</font></small></li>
+      <li><small><font face="Verdana">Added the COUNT primitive. This counts the characters up to
+        the first 0.</font></small></li>
+      <li><small><font face="Verdana">Added the EXIT primitive. This will exit a word immediately.
+        Please note that the stack is not cleaned.</font></small></li>
+      <li><small><font face="Verdana">Added the &lt;# #&gt; conversion words.</font></small></li>
+      <li><font face="Verdana" color="#FF0000"><strong><small>Added support for JAVA libraries.</small></strong></font></li>
+      <li><small><font face="Verdana">Fixed a parser bug that prevented compiling with JDK 1.2</font></small></li>
+      <li><small><font face="Verdana">Fixed the INTERPRET routine. Now it behaves as expected.</font></small></li>
+      <li><small><font face="Verdana">Fixed the multi-line comment parser. (I found serious
+        errors)</font></small></li>
+    </ul>
     <p>&nbsp;</p>
   </blockquote>
 </blockquote>
 
 <blockquote>
-  <h1>Known problems</h1>
+  <h1><small><font face="Verdana">DELTA Forth Reference</font></small></h1>
+  <div align="center"><center><table border="0" width="80%" height="161">
+    <tr>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="memory.htm">Memory Operations</a></font></small></strong></td>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="cstruct.htm">Control Structures</a></font></small></strong></td>
+      <td width="34%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="conv.htm">String Conversion</a></font></small></strong></td>
+    </tr>
+    <tr>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="arith.htm">Arithmetic Operations</a></font></small></strong></td>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="convar.htm">Constants and Variables</a></font></small></strong></td>
+      <td width="34%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="library.htm">JAVA Libraries</a></font></small></strong></td>
+    </tr>
+    <tr>
+      <td width="33%" align="left" valign="middle" height="29"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="logic.htm">Logical Operations</a></font></small></strong></td>
+      <td width="33%" align="left" valign="middle" height="29"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="display.htm">Display Operations</a></font></small></strong></td>
+      <td width="34%" align="left" valign="middle" height="29"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="system.htm">System Variables</a></font></small></strong></td>
+    </tr>
+    <tr>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="stack.htm">Stack Operations</a></font></small></strong></td>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="keyb.htm">Keyboard Operations</a></font></small></strong></td>
+      <td width="34%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="source.htm">Source Files Prerequisites</a></font></small></strong></td>
+    </tr>
+    <tr>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="retstack.htm">Return Stack Operations</a></font></small></strong></td>
+      <td width="33%" align="left" valign="middle" height="28"><strong><small><font
+      face="Verdana"><img src="hand.gif" width="49" height="23" alt="hand.gif (1652 bytes)"><a
+      href="string.htm">String Operations</a></font></small></strong></td>
+      <td width="34%" align="left" valign="middle" height="28"></td>
+    </tr>
+  </table>
+  </center></div>
+</blockquote>
+
+<hr>
+
+<blockquote>
+  <h1><small><font face="Verdana">Known problems</font></small></h1>
   <ul>
-    <li><big>The <strong>?TERMINAL </strong>word raises a Java exception when used. This will be
-      fixed in future releases of the DELTA Forth system.</big></li>
-    <li><big>The word <strong>INTERPRET</strong> is believed to misbehave in certain situations.</big></li>
-    <li><big>The DELTA Forth system has only been tested under the Windows 95/98 environment.
-      Although written entirely in Java, there is a remote possibility that it might not work
-      under other OSes.</big></li>
-    <li><big>Not all words found in standard implementations are included. DELTA Forth is still
-      in the Alpha development stage.</big></li>
-    <li><big>DELTA Forth currently does not support vocabularies.</big></li>
+    <li><small><font face="Verdana">The word <strong>?TERMINAL</strong> does not always work
+      correctly.</font></small></li>
+    <li><small><font face="Verdana">The DELTA Forth system has only been tested under the
+      Windows 95/98 environment. Although written entirely in Java, there is a remote
+      possibility that it might not work under other OSes.</font></small></li>
+    <li><small><font face="Verdana">Not all words found in standard implementations are
+      included. DELTA Forth is still in the Alpha development stage.</font></small></li>
+    <li><small><font face="Verdana">DELTA Forth currently does not support vocabularies.</font></small></li>
   </ul>
-  <h1>Planned enhancements</h1>
+  <p>&nbsp;</p>
+  <h1><small><font face="Verdana">Planned enhancements</font></small></h1>
   <ul>
-    <li><big>Built-in support for floating point</big></li>
-    <li><big>Support for Forth extensions in external libraries written in Java. This will allow
-      exceptional flexibility when dealing with files, streams, etc.</big></li>
+    <li><small><font face="Verdana">Built-in support for floating point</font></small></li>
+    <li><small><font face="Verdana">User-definable paths for libraries and source code</font></small></li>
+    <li><small><font face="Verdana">User-definable Forth addressable space</font></small></li>
   </ul>
 </blockquote>
 
 <blockquote>
-  <h1>Bug reports</h1>
+  <p>&nbsp;</p>
+  <h1><small><font face="Verdana">Bug reports</font></small></h1>
 </blockquote>
 
-<p><big>Bug reports for the compiler/interpreter and documentation are welcome. Also, I
-would like to hear constructive opinions from the users of DELTA Forth. </big></p>
+<p><small><font face="Verdana">Bug reports for the compiler/interpreter and documentation
+are welcome. Also, I would like to hear constructive opinions from the users of DELTA
+Forth. </font></small></p>
 
 <blockquote>
   <blockquote>
-    <p><big>Contact details:</big></p>
+    <p><strong><small><font face="Verdana">Contact details:</font></small></strong></p>
   </blockquote>
 </blockquote>
 <div align="center"><center>
 
 <table border="0" width="80%">
   <tr>
-    <td width="17%"><strong><big>Internet</big></strong></td>
-    <td width="83%"><big>E-mail: <a href="mailto:vbocan@usa.net">vbocan@usa.net</a>&nbsp; URL:
-    <a href="http://www.cs.utt.ro/~bv1011">http://www.cs.utt.ro/~bv1011</a></big></td>
+    <td width="17%"><strong><small><font face="Verdana">Internet</font></small></strong></td>
+    <td width="83%"><strong><small><font face="Verdana">E-mail: <a
+    href="mailto:vbocan@usa.net">vbocan@usa.net</a>&nbsp; URL: <a
+    href="http://members.xoom.com/vbocan">http://members.xoom.com/vbocan</a></font></small></strong></td>
   </tr>
   <tr>
-    <td width="17%"><strong><big>Snail-mail</big></strong></td>
-    <td width="83%"><big>2700 DEVA, Bd. N. Balcescu, Bl.C, Sc.D, Ap.55, jud. Hunedoara, <strong>ROMANIA</strong></big></td>
-  </tr>
-  <tr>
-    <td width="17%"><strong><big>Phone</big></strong></td>
-    <td width="83%"><big>+40 54 220942 (home, Romanian speaking) or +40 92 714798 (cellular)</big></td>
+    <td width="17%"><strong><small><font face="Verdana">Snail-mail</font></small></strong></td>
+    <td width="83%"><strong><small><font face="Verdana">2700 DEVA, Bd. N. Balcescu, Bl.C,
+    Sc.D, Ap.55, jud. Hunedoara, ROMANIA</font></small></strong></td>
   </tr>
 </table>
 </center></div>
-
-<blockquote>
-  <blockquote>
-    <p><big>Optionally, you may send me a short message directly on my mobile phone using the <a
-    href="http://www.mtn.co.za/regulars/sms">Internet MTN service</a>. (When prompted to
-    select the GSM operator, please choose CONNEX)</big></p>
-  </blockquote>
-</blockquote>
 </body>
 </html>

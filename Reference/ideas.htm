@@ -6,176 +6,182 @@
 <title>Enhanced Forth Proposals</title>
 </head>
 
-<body background="images/back.gif">
-<font size="4">
+<body background="back.gif">
+<font size="2">
 
-<h1 align="center"></font><font size="6">Ideas for an Enhanced and Modernized Dialect of
-Forth</font><font size="4"></h1>
+<h1 align="center"></font><font face="Verdana" size="4">Ideas for an Enhanced and
+Modernized Dialect of Forth</font><font size="2"></h1>
 
-<p align="center">Michael Vanier &lt;<a href="mailto:mvanier@bbb.caltech.edu">mvanier@bbb.caltech.edu</a>&gt;</p>
+<p align="center"><font face="Verdana">Michael Vanier &lt;<a
+href="mailto:mvanier@bbb.caltech.edu">mvanier@bbb.caltech.edu</a>&gt;</font></p>
 
-<p><strong>1) Parser changes</strong></p>
+<p><font face="Verdana"><strong>1) Parser changes</strong></font></p>
 
-<p>The Forth parser is excessively dumb. While this has certain advantages, notably making
-it easy to extend, it also makes certain easy things unnecessarily hard. This is certainly
-doable; most of these changes already exist (in a slightly different form) in PostScript.
-Things I'd like to change include:</p>
+<p><font face="Verdana">The Forth parser is excessively dumb. While this has certain
+advantages, notably making it easy to extend, it also makes certain easy things
+unnecessarily hard. This is certainly doable; most of these changes already exist (in a
+slightly different form) in PostScript. Things I'd like to change include:</font></p>
 
-<p>-- Strings are represented as characters between double quotes, as in &quot;this is a
-string&quot;. Backslash characters like \n will have the same meanings they do in C.
-Character constants will be represented as single-quoted letters, also like in C: 't'.
-Strings will be represented as null-terminated strings like in C, and all the C string
-functions will be available, such as <strong>strcmp</strong>, etc.</p>
+<p><font face="Verdana">-- Strings are represented as characters between double quotes, as
+in &quot;this is a string&quot;. Backslash characters like \n will have the same meanings
+they do in C. Character constants will be represented as single-quoted letters, also like
+in C: 't'. Strings will be represented as null-terminated strings like in C, and all the C
+string functions will be available, such as <strong>strcmp</strong>, etc.</font></p>
 
-<p>Comment: I'm not trying to make Forth into C, but why not borrow certain C constructs
-that are used in most languages and have proven themselves over time to be intuitive and
-easy to use? I hate counted strings because they limit you to particular string lengths,
-which is not something a programmer should have to worry about. </p>
+<p><font face="Verdana">Comment: I'm not trying to make Forth into C, but why not borrow
+certain C constructs that are used in most languages and have proven themselves over time
+to be intuitive and easy to use? I hate counted strings because they limit you to
+particular string lengths, which is not something a programmer should have to worry about.
+</font></p>
 
-<p>-- There is a standard syntax for arrays and lists. I'd dearly love it if I could
-express arrays (or lists) as [1, 2, 3] and refer to them as foo[1] etc., maybe even with
-array slicing (foo[0:1]). This of course conflicts with the standard Forth words [ and ],
-but you could have other words for this (e.g. compile: and interpret: which would be
-self-documenting). I would like to never again have to do nonsense like this:</p>
-
-<blockquote>
-  <p><code>: intarray ( size -- ) create 4 * allot </code></font></p>
-  <p><code><font size="4">does&gt; ( index array -- value ) 4 * + ;</font></code></p>
-  <p><code><font size="4">10 intarray foo</font></code></p>
-  <p><code><font size="4">123 5 foo ! \ I'd prefer 123 foo[5] !</font></code></p>
-  <p><font size="4"><code>5 foo @ \ I'd prefer foo[5] @</code></p>
-</blockquote>
-
-<p>Of course, the exact definition of the array could be left up to the programmer; the
-parser simply converts foo[5] to 5 foo. Similarly, foo[5][3] would be converted to 5 3 foo
-etc.</p>
-
-<p>-- There is a standard syntax for associative arrays (arrays indexed by strings). They
-could have syntax like [&quot;Monday&quot;:1, &quot;Tuesday&quot;:2, ... ], and could be
-referred to as foo[&quot;Monday&quot;].</p>
-
-<p>-- There is a standard syntax for objects and modules, which is the usual C/C++/Java
-syntax of foo.bar. Also, you can chain them: foo.bar.baz may mean the baz field of the bar
-object in module foo. Alternatively, modules might be represented with : so that you'd
-have foo:bar.baz.</p>
-
-<p>-- Number parsing is changed and made compatible with virtually every other computer
-language. The ridiculously unintuitive use of 1.2 to represent 12000000 or whatever is
-gone; 1.2 means a floating-point number, as does 1.2e-34. If you want a long integer
-literal use 120000000L; integers too large to fit in a standard cell will automatically be
-converted to a long. Naturally, there is complete support for floating-point numbers, as
-exists in most good Forth systems.</p>
-
-<p>-- Words are case-sensitive. </p>
-
-<p><strong>2) Built-in support for common data structures</strong></p>
-
-<p>Even though it's possible to implement arbitrary data structures in Forth, it's
-unnecessarily hard in most cases relative to other languages. Here are some ways this
-could be made easier.</p>
-
-<p>-- There is garbage collection. Any value dropped from the stack will be replaced by a
-null value on the cell above the top-of-stack, so that the GC can work correctly for
-pointers on the stack too. I'm thinking of something like the Boehm-Demers GC here. This
-will cost in time and space, but it will make it easy to move data structures around
-without the programmer having to worry about manual deallocation. Using PAD for temporary
-storage is a joke for any project of reasonable size (and can easily result in very subtle
-bugs).</p>
-
-<p>-- Literal strings are handled by allocating storage on the heap to hold the string,
-copying the string and leaving the address on the stack. This address can be copied
-anywhere and the GC will take care of freeing it when it's no longer being used.</p>
-
-<p>-- Literal arrays, associative arrays and objects are handled in a similar way,
-allocating space and leaving a pointer on the stack.</p>
-
-<p><strong>3) Support for large-scale programming</strong></p>
-
-<p>-- There is a standard object system. I'd like something that provides information
-hiding (say with separate wordlists for objects) and inheritance.</p>
-
-<p>-- There is a standard module system, with different modules placed into a separate
-vocabulary. Executing foo.bar, say, means &quot;execute the word bar in the vocabulary
-foo&quot;.</p>
-
-<p><strong>4) Strong (or stronger) typing</strong></p>
-
-<p>Forth has traditionally been a typeless language. One annoying consequence of this is
-that instead of declaring the types of variables, programmers have to declare the types of
-operators. Thus in addition to + we have f+, fe+, u+, d+, ud+ etc. All this does is to
-massively obfuscate the code, make it unreadable, and disguise the algorithm. When you
-combine this with the stack manipulation operators, it's no wonder Forth is such a
-laughing stock among most serious programmers. It also gives Forth the dubious distinction
-of being less readable than assembly language in many cases. However, curing this problem
-while maintaining the virtues of Forth (speed, high interactivity, extensibility) is
-difficult. If we want to move in this direction I think there will have to be support for
-strong typing at the stack level i.e. every entity on the stack has an associated type,
-and new types can be declared. One way this could be done is to have a &quot;type
-stack&quot; which is used along with the integer and floating point stacks to present the
-illusion of a single data stack to the programmer. The integer operations will be renamed
-I+, I* etc. and will not normally be used by the programmer. When the programmer enters a
-literal number, the system determines whether it is an integer or float and puts it on the
-corresponding stack (like most Forths do now). It also puts a type tag on the type stack
-indicating the type of the argument. Then, when +, for instance, is executed, the system
-will check the type of the arguments on the type stack, convert int to float if necessary,
-and execute either an integer or a floating-point add as required. Conversions between
-integer and floating-point can be handled automatically, as can short-&gt;long and
-unsigned-&gt;signed. This concept can be taken a long way, with separate types for arrays,
-pointers, etc. but that would be a lot of work to do well. It could also be made to work
-with the local variable declarations in gforth to identify the types of locals. Finally,
-it would be good if there was a way to compile the correct operators for a word instead of
-having to do a run-time type lookup (which is very slow). It might also be worthwhile to
-declare the type of the return value(s). These are difficult issues.</p>
-
-<p><strong>5) Interfacing with the external world</strong></p>
-
-<p>-- There is a straightforward interface to the external programming environment and new
-primitives can be written in C (or Java, say). Without this it's impossible to have a
-truly useful language.</p>
-
-<p><strong>6) Miscellaneous</strong></p>
-
-<p>-- There should be support for local variables. Having to use lots of SWAPs, DUPs and
-ROTs to do even simple calculations is probably the biggest thing that turns people off of
-Forth. The gforth locals system is the best I've seen, and is very intuitive in practice,
-so I suggest that that become a standard or at least the starting point for local variable
-support. It should be enhanced to support strong typing, so we can write things like this:</p>
+<p><font face="Verdana">-- There is a standard syntax for arrays and lists. I'd dearly
+love it if I could express arrays (or lists) as [1, 2, 3] and refer to them as foo[1]
+etc., maybe even with array slicing (foo[0:1]). This of course conflicts with the standard
+Forth words [ and ], but you could have other words for this (e.g. compile: and interpret:
+which would be self-documenting). I would like to never again have to do nonsense like
+this:</font></p>
 
 <blockquote>
-  <p><code>: test { int a b float c d -- float }</code></font></p>
-  <p><code><font size="4">a b + c d / *</font></code></p>
-  <p><font size="4"><code>;</code></p>
+  <p><font face="Verdana"><code>: intarray ( size -- ) create 4 * allot </code></font></font></p>
+  <p><font face="Verdana" size="2"><code>does&gt; ( index array -- value ) 4 * + ;</code></font></p>
+  <p><font face="Verdana" size="2"><code>10 intarray foo</code></font></p>
+  <p><font face="Verdana" size="2"><code>123 5 foo ! \ I'd prefer 123 foo[5] !</code></font></p>
+  <p><font size="2"><font face="Verdana"><code>5 foo @ \ I'd prefer foo[5] @</code></font></p>
 </blockquote>
 
-<p>Before the word is executed the types are checked, and an exception is raised if the
-types don't match the function signature.</p>
+<p><font face="Verdana">Of course, the exact definition of the array could be left up to
+the programmer; the parser simply converts foo[5] to 5 foo. Similarly, foo[5][3] would be
+converted to 5 3 foo etc.</font></p>
 
-<p>-- There should be a standard algebraic equation parser, to make defining mathematical
-equations easier. This would be modeled after the Formula Translators of Julian Noble and
-Wil Baden. One possibility is to use delimiters to indicate sections that have to be
-parsed differently, i.e. </p>
+<p><font face="Verdana">-- There is a standard syntax for associative arrays (arrays
+indexed by strings). They could have syntax like [&quot;Monday&quot;:1,
+&quot;Tuesday&quot;:2, ... ], and could be referred to as foo[&quot;Monday&quot;].</font></p>
+
+<p><font face="Verdana">-- There is a standard syntax for objects and modules, which is
+the usual C/C++/Java syntax of foo.bar. Also, you can chain them: foo.bar.baz may mean the
+baz field of the bar object in module foo. Alternatively, modules might be represented
+with : so that you'd have foo:bar.baz.</font></p>
+
+<p><font face="Verdana">-- Number parsing is changed and made compatible with virtually
+every other computer language. The ridiculously unintuitive use of 1.2 to represent
+12000000 or whatever is gone; 1.2 means a floating-point number, as does 1.2e-34. If you
+want a long integer literal use 120000000L; integers too large to fit in a standard cell
+will automatically be converted to a long. Naturally, there is complete support for
+floating-point numbers, as exists in most good Forth systems.</font></p>
+
+<p><font face="Verdana">-- Words are case-sensitive. </font></p>
+
+<p><font face="Verdana"><strong>2) Built-in support for common data structures</strong></font></p>
+
+<p><font face="Verdana">Even though it's possible to implement arbitrary data structures
+in Forth, it's unnecessarily hard in most cases relative to other languages. Here are some
+ways this could be made easier.</font></p>
+
+<p><font face="Verdana">-- There is garbage collection. Any value dropped from the stack
+will be replaced by a null value on the cell above the top-of-stack, so that the GC can
+work correctly for pointers on the stack too. I'm thinking of something like the
+Boehm-Demers GC here. This will cost in time and space, but it will make it easy to move
+data structures around without the programmer having to worry about manual deallocation.
+Using PAD for temporary storage is a joke for any project of reasonable size (and can
+easily result in very subtle bugs).</font></p>
+
+<p><font face="Verdana">-- Literal strings are handled by allocating storage on the heap
+to hold the string, copying the string and leaving the address on the stack. This address
+can be copied anywhere and the GC will take care of freeing it when it's no longer being
+used.</font></p>
+
+<p><font face="Verdana">-- Literal arrays, associative arrays and objects are handled in a
+similar way, allocating space and leaving a pointer on the stack.</font></p>
+
+<p><font face="Verdana"><strong>3) Support for large-scale programming</strong></font></p>
+
+<p><font face="Verdana">-- There is a standard object system. I'd like something that
+provides information hiding (say with separate wordlists for objects) and inheritance.</font></p>
+
+<p><font face="Verdana">-- There is a standard module system, with different modules
+placed into a separate vocabulary. Executing foo.bar, say, means &quot;execute the word
+bar in the vocabulary foo&quot;.</font></p>
+
+<p><font face="Verdana"><strong>4) Strong (or stronger) typing</strong></font></p>
+
+<p><font face="Verdana">Forth has traditionally been a typeless language. One annoying
+consequence of this is that instead of declaring the types of variables, programmers have
+to declare the types of operators. Thus in addition to + we have f+, fe+, u+, d+, ud+ etc.
+All this does is to massively obfuscate the code, make it unreadable, and disguise the
+algorithm. When you combine this with the stack manipulation operators, it's no wonder
+Forth is such a laughing stock among most serious programmers. It also gives Forth the
+dubious distinction of being less readable than assembly language in many cases. However,
+curing this problem while maintaining the virtues of Forth (speed, high interactivity,
+extensibility) is difficult. If we want to move in this direction I think there will have
+to be support for strong typing at the stack level i.e. every entity on the stack has an
+associated type, and new types can be declared. One way this could be done is to have a
+&quot;type stack&quot; which is used along with the integer and floating point stacks to
+present the illusion of a single data stack to the programmer. The integer operations will
+be renamed I+, I* etc. and will not normally be used by the programmer. When the
+programmer enters a literal number, the system determines whether it is an integer or
+float and puts it on the corresponding stack (like most Forths do now). It also puts a
+type tag on the type stack indicating the type of the argument. Then, when +, for
+instance, is executed, the system will check the type of the arguments on the type stack,
+convert int to float if necessary, and execute either an integer or a floating-point add
+as required. Conversions between integer and floating-point can be handled automatically,
+as can short-&gt;long and unsigned-&gt;signed. This concept can be taken a long way, with
+separate types for arrays, pointers, etc. but that would be a lot of work to do well. It
+could also be made to work with the local variable declarations in gforth to identify the
+types of locals. Finally, it would be good if there was a way to compile the correct
+operators for a word instead of having to do a run-time type lookup (which is very slow).
+It might also be worthwhile to declare the type of the return value(s). These are
+difficult issues.</font></p>
+
+<p><font face="Verdana"><strong>5) Interfacing with the external world</strong></font></p>
+
+<p><font face="Verdana">-- There is a straightforward interface to the external
+programming environment and new primitives can be written in C (or Java, say). Without
+this it's impossible to have a truly useful language.</font></p>
+
+<p><font face="Verdana"><strong>6) Miscellaneous</strong></font></p>
+
+<p><font face="Verdana">-- There should be support for local variables. Having to use lots
+of SWAPs, DUPs and ROTs to do even simple calculations is probably the biggest thing that
+turns people off of Forth. The gforth locals system is the best I've seen, and is very
+intuitive in practice, so I suggest that that become a standard or at least the starting
+point for local variable support. It should be enhanced to support strong typing, so we
+can write things like this:</font></p>
 
 <blockquote>
-  <p><code>: equation { int a b c -- int } </code></font></p>
-  <p><code><font size="4">| b^2 + 4 * a * c | \ Here the | is the delimiter for algebraic
-  equations.</font></code></p>
-  <p><font size="4"><code>;</code></p>
+  <p><font face="Verdana"><code>: test { int a b float c d -- float }</code></font></font></p>
+  <p><font face="Verdana" size="2"><code>a b + c d / *</code></font></p>
+  <p><font size="2"><font face="Verdana"><code>;</code></font></p>
 </blockquote>
 
-<p>-- There should be a way to compile Forth words to a native-code (non-threaded)
-version. The threaded system is mainly useful for code development, but it's slow. A
-native-code system is generally accepted by the Forth community as being a good thing, but
-most Forths still don't include it. One relatively easy way is to &quot;unthread&quot; the
-words by combining them into one big word; I think HS/Forth did this. This obviously leads
-to bigger words but can speed things up dramatically. </p>
+<p><font face="Verdana">Before the word is executed the types are checked, and an
+exception is raised if the types don't match the function signature.</font></p>
 
-<p>-- There is a macro system and inline functions. There are a number of existing
-implementations of this sort of thing.</p>
+<p><font face="Verdana">-- There should be a standard algebraic equation parser, to make
+defining mathematical equations easier. This would be modeled after the Formula
+Translators of Julian Noble and Wil Baden. One possibility is to use delimiters to
+indicate sections that have to be parsed differently, i.e. </font></p>
+
+<blockquote>
+  <p><font face="Verdana"><code>: equation { int a b c -- int } </code></font></font></p>
+  <p><font face="Verdana" size="2"><code>| b^2 + 4 * a * c | \ Here the | is the delimiter
+  for algebraic equations.</code></font></p>
+  <p><font size="2"><font face="Verdana"><code>;</code></font></p>
+</blockquote>
+
+<p><font face="Verdana">-- There should be a way to compile Forth words to a native-code
+(non-threaded) version. The threaded system is mainly useful for code development, but
+it's slow. A native-code system is generally accepted by the Forth community as being a
+good thing, but most Forths still don't include it. One relatively easy way is to
+&quot;unthread&quot; the words by combining them into one big word; I think HS/Forth did
+this. This obviously leads to bigger words but can speed things up dramatically. </font></p>
+
+<p><font face="Verdana">-- There is a macro system and inline functions. There are a
+number of existing implementations of this sort of thing.</font></p>
 </font>
 
 <hr>
 
-<p><img src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><small><font face="Verdana"><img src="violet.gif" align="middle" width="40"
+height="40">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main page</a></font></small></small></p>
 </body>
 </html>

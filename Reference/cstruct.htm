@@ -5,277 +5,290 @@
 <title>Control Structures</title>
 </head>
 
-<body background="images/back.gif">
+<body background="back.gif">
 
-<h1><a name="top"></a>Control Structures</h1>
+<h1><small><font face="Verdana"><a name="top"></a>Control Structures</font></small></h1>
 
 <hr>
 
-<p>Like any other programming language, DELTA Forth has its own control structures. In
-many aspects, the structures are semantically different from the ones found in languages
-like Pascal or C. However, the functionality is about the same.</p>
+<p><small><font face="Verdana">Like any other programming language, DELTA Forth has its
+own control structures. In many aspects, the structures are semantically different from
+the ones found in languages like Pascal or C. However, the functionality is about the
+same.</font></small></p>
 <div align="center"><center>
 
 <table border="0" width="80%" height="126">
   <tr>
-    <td width="33%" height="5%" align="center" valign="middle"><strong><big><a
-    href="#if_else_then">IF ... ELSE ... THEN</a></big></strong></td>
-    <td width="33%" height="5%" align="center" valign="middle"><strong><big><a href="#do_loop">DO
-    ... LOOP</a></big></strong></td>
-    <td width="34%" height="5%" align="center" valign="middle"><strong><big><a
-    href="#begin_again">BEGIN ... AGAIN</a></big></strong></td>
+    <td width="33%" height="5%" align="center" valign="middle"><font face="Verdana"><strong><a
+    href="#if_else_then">IF ... ELSE ... THEN</a></strong></font></td>
+    <td width="33%" height="5%" align="center" valign="middle"><font face="Verdana"><strong><a
+    href="#do_loop">DO ... LOOP</a></strong></font></td>
+    <td width="34%" height="5%" align="center" valign="middle"><font face="Verdana"><strong><a
+    href="#begin_again">BEGIN ... AGAIN</a></strong></font></td>
   </tr>
   <tr>
-    <td width="33%" height="5%" align="center" valign="middle"><strong><big><a
-    href="#begin_until">BEGIN ... UNTIL</a></big></strong></td>
-    <td width="33%" height="5%" align="center" valign="middle"><strong><big><a
-    href="#begin_while_repeat">BEGIN ... WHILE ... REPEAT</a></big></strong></td>
-    <td width="34%" height="5%" align="center" valign="middle"><a href="#case_endcase"><strong><big>CASE
-    ... ENDCASE</big></strong></a></td>
+    <td width="33%" height="5%" align="center" valign="middle"><font face="Verdana"><strong><a
+    href="#begin_until">BEGIN ... UNTIL</a></strong></font></td>
+    <td width="33%" height="5%" align="center" valign="middle"><font face="Verdana"><strong><a
+    href="#begin_while_repeat">BEGIN ... WHILE ... REPEAT</a></strong></font></td>
+    <td width="34%" height="5%" align="center" valign="middle"><font face="Verdana"><a
+    href="#case_endcase"><strong>CASE ... ENDCASE</strong></a></font></td>
   </tr>
 </table>
 </center></div>
 
 <hr>
 
-<h3><a name="if_else_then"></a>Conditional structure <font color="#0080FF">IF ... ELSE ...
-THEN</font></h3>
+<h3><small><font face="Verdana"><a name="if_else_then"></a>Conditional structure <font
+color="#0080FF">IF ... ELSE ... THEN</font></font></small></h3>
 
-<p><strong>Description</strong>: <em>This conditional structure is used for taking
-decisions in a program, according to a condition (a Boolean value)</em>.</p>
+<p><small><font face="Verdana"><strong>Description</strong>: <em>This conditional
+structure is used for taking decisions in a program, according to a condition (a Boolean
+value)</em>.</font></small></p>
 
-<p><strong>Usage: <em>&lt;condition&gt;</strong> IF <strong>&lt;branch_for_true&gt;</strong>
-ELSE <strong>&lt;branch_for_false&gt;</strong> THEN</em></p>
-
-<blockquote>
-  <p><em><strong>&lt;condition&gt;</strong> IF <strong>&lt;branch_for_true&gt;</strong> THEN</em></p>
-</blockquote>
-
-<p><em>If the <strong>&lt;condition&gt;</strong> is true, then <strong>&lt;branch_for_true&gt;</strong>
-is executed, otherwise <strong>&lt;branch_for_false&gt;</strong> is executed. &lt;<strong>branch_for_false</strong>&gt;
-can miss.</em></p>
-
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Usage: <em>&lt;condition&gt;</strong> IF <strong>&lt;branch_for_true&gt;</strong>
+ELSE <strong>&lt;branch_for_false&gt;</strong> THEN</em></font></small></p>
 
 <blockquote>
-  <p>: POWER</p>
-  <p>DUP 10 &lt;</p>
-  <p>IF DROP 10 . ELSE DUP * THEN</p>
-  <p>; </p>
+  <p><small><font face="Verdana"><em><strong>&lt;condition&gt;</strong> IF <strong>&lt;branch_for_true&gt;</strong>
+  THEN</em></font></small></p>
 </blockquote>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana"><em>If the <strong>&lt;condition&gt;</strong> is true, then
+<strong>&lt;branch_for_true&gt;</strong> is executed, otherwise <strong>&lt;branch_for_false&gt;</strong>
+is executed. &lt;<strong>branch_for_false</strong>&gt; can miss.</em></font></small></p>
+
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
+
+<blockquote>
+  <p><small><font face="Verdana">: POWER</font></small></p>
+  <p><small><font face="Verdana">DUP 10 &lt;</font></small></p>
+  <p><small><font face="Verdana">IF DROP 10 . ELSE DUP * THEN</font></small></p>
+  <p><small><font face="Verdana">; </font></small></p>
+</blockquote>
+
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a></font></small></p>
 
 <hr>
 
-<h3><a name="do_loop"></a>Structure <font color="#0080FF">DO ... LOOP</font></h3>
+<h3><small><font face="Verdana"><a name="do_loop"></a>Structure <font color="#0080FF">DO
+... LOOP</font></font></small></h3>
 
-<p><strong>Description</strong>: This structure is used to iterate a program sequence,
-when the number of iterations is known. This is somehow similar to <strong>for</strong>
-statements in imperative languages.</p>
+<p><small><font face="Verdana"><strong>Description</strong>: This structure is used to
+iterate a program sequence, when the number of iterations is known. This is somehow
+similar to <strong>for</strong> statements in imperative languages.</font></small></p>
 
-<p><strong>Usage: v1 vi DO &lt;word1&gt; &lt;word2&gt; &lt;word3&gt; ... LOOP
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v1 - limit value, vi - initial value)</strong></p>
+<p><small><font face="Verdana"><strong>Usage: v1 vi DO &lt;word1&gt; &lt;word2&gt;
+&lt;word3&gt; ... LOOP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v1 - limit value, vi -
+initial value)</strong></font></small></p>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
-<p><code>: NR5</code></p>
-
-<blockquote>
-  <p><code>5 0</code></p>
-  <p><code>DO</code></p>
-  <p><code>I</code></p>
-  <p><code>.</code></p>
-  <p><code>LOOP</code></p>
-</blockquote>
-
-<p><code>;</code></p>
-
-<p>If for any reason the programmer wants to leave the DO LOOP structure, the word <strong>LEAVE</strong>
-forces the current index value to the limit value, thus exiting the loop.</p>
-
-<p><strong>Example:</strong></p>
-
-<p><code>: DISP5OF10</code></p>
+<p><small><font face="Verdana"><code>: NR5</code></font></small></p>
 
 <blockquote>
-  <p><code>11 1</code></p>
-  <p><code>I DUP</code></p>
-  <p><code>5 =</code></p>
-  <p><code>IF LEAVE THEN</code></p>
-  <p><code>. LOOP</code></p>
+  <p><small><font face="Verdana"><code>5 0</code></font></small></p>
+  <p><small><font face="Verdana"><code>DO</code></font></small></p>
+  <p><small><font face="Verdana"><code>I</code></font></small></p>
+  <p><small><font face="Verdana"><code>.</code></font></small></p>
+  <p><small><font face="Verdana"><code>LOOP</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p>Sometimes it might be useful to increment the stack with a value other than 1. In this
-case we use the word <strong>+LOOP</strong>.</p>
+<p><small><font face="Verdana">If for any reason the programmer wants to leave the DO LOOP
+structure, the word <strong>LEAVE</strong> forces the current index value to the limit
+value, thus exiting the loop.</font></small></p>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
-<p><code>: DISPEVEN</code></p>
+<p><small><font face="Verdana"><code>: DISP5OF10</code></font></small></p>
 
 <blockquote>
-  <p><code>10 0</code></p>
-  <p><code>DO</code></p>
-  <p><code>i .</code></p>
-  <p><code>2</code></p>
-  <p><code>+LOOP</code></p>
+  <p><small><font face="Verdana"><code>11 1</code></font></small></p>
+  <p><small><font face="Verdana"><code>I DUP</code></font></small></p>
+  <p><small><font face="Verdana"><code>5 =</code></font></small></p>
+  <p><small><font face="Verdana"><code>IF LEAVE THEN</code></font></small></p>
+  <p><small><font face="Verdana"><code>. LOOP</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana">Sometimes it might be useful to increment the stack with a
+value other than 1. In this case we use the word <strong>+LOOP</strong>.</font></small></p>
+
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
+
+<p><small><font face="Verdana"><code>: DISPEVEN</code></font></small></p>
+
+<blockquote>
+  <p><small><font face="Verdana"><code>10 0</code></font></small></p>
+  <p><small><font face="Verdana"><code>DO</code></font></small></p>
+  <p><small><font face="Verdana"><code>i .</code></font></small></p>
+  <p><small><font face="Verdana"><code>2</code></font></small></p>
+  <p><small><font face="Verdana"><code>+LOOP</code></font></small></p>
+</blockquote>
+
+<p><small><font face="Verdana"><code>;</code></font></small></p>
+
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a></font></small></p>
 
 <hr>
 
-<h3><strong><a name="begin_again">Structure <font color="#0080FF">BEGIN ... AGAIN</font></a></strong></h3>
+<h3><small><font face="Verdana"><strong><a name="begin_again">Structure <font
+color="#0080FF">BEGIN ... AGAIN</font></a></strong></font></small></h3>
 
-<p><strong>Description: </strong>This represents the infinite loop.</p>
+<p><small><font face="Verdana"><strong>Description: </strong>This represents the infinite
+loop.</font></small></p>
 
-<p><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt; &lt;word3&gt; ... AGAIN</strong></p>
+<p><small><font face="Verdana"><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt;
+&lt;word3&gt; ... AGAIN</strong></font></small></p>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
-<p><code>: INFINITY</code></p>
+<p><small><font face="Verdana"><code>: INFINITY</code></font></small></p>
 
 <blockquote>
-  <p><code>BEGIN 1 . AGAIN</code></p>
+  <p><small><font face="Verdana"><code>BEGIN 1 . AGAIN</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a></font></small></p>
 
 <hr>
 
-<h3><strong><a name="do_loop"></a><a name="begin_until">Structure <font color="#0080FF">BEGIN
-... UNTIL</font></a></strong></h3>
+<h3><small><font face="Verdana"><strong><a name="do_loop"></a><a name="begin_until">Structure
+<font color="#0080FF">BEGIN ... UNTIL</font></a></strong></font></small></h3>
 
-<p><strong>Description: </strong>The loop executes an undefined number of times.</p>
+<p><small><font face="Verdana"><strong>Description: </strong>The loop executes an
+undefined number of times.</font></small></p>
 
-<p><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt; &lt;word3&gt; ... &lt;condition&gt;
-UNTIL</strong></p>
+<p><small><font face="Verdana"><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt;
+&lt;word3&gt; ... &lt;condition&gt; UNTIL</strong></font></small></p>
 
-<p><strong>Example: </strong></p>
+<p><small><font face="Verdana"><strong>Example: </strong></font></small></p>
 
-<p><code>: PRINTCAR</code></p>
+<p><small><font face="Verdana"><code>: PRINTCAR</code></font></small></p>
 
 <blockquote>
-  <p><code>BEGIN</code></p>
-  <p><code>KEY</code></p>
-  <p><code>DUP .</code></p>
-  <p><code>13 =</code></p>
-  <p><code>UNTIL</code></p>
+  <p><small><font face="Verdana"><code>BEGIN</code></font></small></p>
+  <p><small><font face="Verdana"><code>KEY</code></font></small></p>
+  <p><small><font face="Verdana"><code>DUP .</code></font></small></p>
+  <p><small><font face="Verdana"><code>13 =</code></font></small></p>
+  <p><small><font face="Verdana"><code>UNTIL</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a></font></small></p>
 
 <hr>
 
-<h3><strong><a name="do_loop"></a><a name="begin_while_repeat">Structure <font
-color="#0080FF">BEGIN ... WHILE ... REPEAT</font></a></strong></h3>
+<h3><small><font face="Verdana"><strong><a name="do_loop"></a><a name="begin_while_repeat">Structure
+<font color="#0080FF">BEGIN ... WHILE ... REPEAT</font></a></strong></font></small></h3>
 
-<p><strong>Description: </strong>This loop can be left in a certain point, unlike the
-BEGIN ... UNTIL loop.</p>
+<p><small><font face="Verdana"><strong>Description: </strong>This loop can be left in a
+certain point, unlike the BEGIN ... UNTIL loop.</font></small></p>
 
-<p><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt; ... &lt;condition&gt; WHILE
-&lt;word11&gt; &lt;word12&gt; ... REPEAT</strong></p>
+<p><small><font face="Verdana"><strong>Usage: BEGIN &lt;word1&gt; &lt;word2&gt; ...
+&lt;condition&gt; WHILE &lt;word11&gt; &lt;word12&gt; ... REPEAT</strong></font></small></p>
 
-<p>After executing &lt;word1&gt; and so on, WHILE tests the stack. If the value found is
-true, the words between WHILE and REPEAT are executed, otherwise the loop is left.</p>
+<p><small><font face="Verdana">After executing &lt;word1&gt; and so on, WHILE tests the
+stack. If the value found is true, the words between WHILE and REPEAT are executed,
+otherwise the loop is left.</font></small></p>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
-<p><code>: PRINTCAR</code></p>
+<p><small><font face="Verdana"><code>: PRINTCAR</code></font></small></p>
 
 <blockquote>
-  <p><code>BEGIN</code></p>
-  <p><code>KEY</code></p>
-  <p><code>DUP</code></p>
-  <p><code>13 -</code></p>
-  <p><code>WHILE</code></p>
-  <p><code>.</code></p>
-  <p><code>REPEAT</code></p>
-  <p><code>DROP</code></p>
+  <p><small><font face="Verdana"><code>BEGIN</code></font></small></p>
+  <p><small><font face="Verdana"><code>KEY</code></font></small></p>
+  <p><small><font face="Verdana"><code>DUP</code></font></small></p>
+  <p><small><font face="Verdana"><code>13 -</code></font></small></p>
+  <p><small><font face="Verdana"><code>WHILE</code></font></small></p>
+  <p><small><font face="Verdana"><code>.</code></font></small></p>
+  <p><small><font face="Verdana"><code>REPEAT</code></font></small></p>
+  <p><small><font face="Verdana"><code>DROP</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a></font></small></p>
 
 <hr>
 
-<p><strong><a name="do_loop"></a><a name="case_endcase">Structure <font color="#0080FF">CASE
-... ENDCASE</font></a></strong></p>
+<p><small><font face="Verdana"><strong><a name="do_loop"></a><a name="case_endcase">Structure
+<font color="#0080FF">CASE ... ENDCASE</font></a></strong></font></small></p>
 
-<p><strong>Description: </strong>Instead of using multiple nested <strong>IF ... ELSE ..
-THEN </strong>statements, it is more convenient to use the <strong>CASE ... ENDCASE </strong>structure.</p>
+<p><small><font face="Verdana"><strong>Description: </strong>Instead of using multiple
+nested <strong>IF ... ELSE .. THEN </strong>statements, it is more convenient to use the <strong>CASE
+... ENDCASE </strong>structure.</font></small></p>
 
-<p><strong>Usage: </strong></p>
+<p><small><font face="Verdana"><strong>Usage: </strong></font></small></p>
 
 <blockquote>
-  <p><strong>&lt;value&gt;</strong></p>
-  <p><strong>CASE</strong></p>
+  <p><small><font face="Verdana"><strong>&lt;value&gt;</strong></font></small></p>
+  <p><small><font face="Verdana"><strong>CASE</strong></font></small></p>
   <blockquote>
-    <p><strong>1 OF &lt;branch1&gt; ENDOF</strong></p>
-    <p><strong>2 OF &lt;branch2&gt; ENDOF</strong></p>
-    <p><strong>3 OF &lt;branch3&gt; ENDOF</strong></p>
-    <p><strong>....</strong></p>
-    <p><strong>n OF &lt;branch n&gt; ENDOF</strong></p>
-    <p><strong>&lt;default&gt;</strong></p>
+    <p><small><font face="Verdana"><strong>1 OF &lt;branch1&gt; ENDOF</strong></font></small></p>
+    <p><small><font face="Verdana"><strong>2 OF &lt;branch2&gt; ENDOF</strong></font></small></p>
+    <p><small><font face="Verdana"><strong>3 OF &lt;branch3&gt; ENDOF</strong></font></small></p>
+    <p><small><font face="Verdana"><strong>....</strong></font></small></p>
+    <p><small><font face="Verdana"><strong>n OF &lt;branch n&gt; ENDOF</strong></font></small></p>
+    <p><small><font face="Verdana"><strong>&lt;default&gt;</strong></font></small></p>
   </blockquote>
-  <p><strong>ENDCASE</strong></p>
+  <p><small><font face="Verdana"><strong>ENDCASE</strong></font></small></p>
 </blockquote>
 
-<p>The value on the stack is looked for among the values in front of OF statements. If
-matched, the respective branch is executed. If no match, the default sequence is executed.</p>
+<p><small><font face="Verdana">The value on the stack is looked for among the values in
+front of OF statements. If matched, the respective branch is executed. If no match, the
+default sequence is executed.</font></small></p>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
-<p><code>: DISPLAY</code></p>
+<p><small><font face="Verdana"><code>: DISPLAY</code></font></small></p>
 
 <blockquote>
-  <p><code>2</code></p>
-  <p><code>CASE</code></p>
-  <p><code>1 OF .&quot; One&quot; ENDOF</code></p>
-  <p><code>2 OF .&quot; Two&quot; ENDOF</code></p>
-  <p><code>3 OF .&quot; Three&quot; ENDOF</code></p>
-  <p><code>.&quot; Sorry, I don't know that!&quot;</code></p>
+  <p><small><font face="Verdana"><code>2</code></font></small></p>
+  <p><small><font face="Verdana"><code>CASE</code></font></small></p>
+  <p><small><font face="Verdana"><code>1 OF .&quot; One&quot; ENDOF</code></font></small></p>
+  <p><small><font face="Verdana"><code>2 OF .&quot; Two&quot; ENDOF</code></font></small></p>
+  <p><small><font face="Verdana"><code>3 OF .&quot; Three&quot; ENDOF</code></font></small></p>
+  <p><small><font face="Verdana"><code>.&quot; Sorry, I don't know that!&quot;</code></font></small></p>
 </blockquote>
 
 <blockquote>
-  <p><code>ENDCASE</code></p>
+  <p><small><font face="Verdana"><code>ENDCASE</code></font></small></p>
 </blockquote>
 
-<p><code>;</code></p>
+<p><small><font face="Verdana"><code>;</code></font></small></p>
 
-<p><img src="images/disk.gif" width="40" height="40" align="middle"> &nbsp;&nbsp;&nbsp; <a
-href="#top">Back to top</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img
-src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a><a name="do_loop"></a></p>
+<p><small><font face="Verdana"><img src="disk.gif" width="40" height="40" align="middle">
+&nbsp;&nbsp;&nbsp; <a href="#top">Back to top</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="violet.gif"
+width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a href="index.htm">Back to main
+page</a><a name="do_loop"></a></font></small></p>
 </body>
 </html>

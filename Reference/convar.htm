@@ -5,55 +5,56 @@
 <title>Constants and Variables</title>
 </head>
 
-<body background="images/back.gif">
+<body background="back.gif">
 
-<h1>Constants and Variables</h1>
+<h1><small><font face="Verdana">Constants and Variables</font></small></h1>
 
 <hr>
 
-<p><strong>Constants</strong></p>
+<p><small><font face="Verdana"><strong>Constants</strong></font></small></p>
 
-<p>Constants are used when a value is needed in several places across the source code.
-Defining constants results in easier program maintenance and better readability.</p>
+<p><small><font face="Verdana">Constants are used when a value is needed in several places
+across the source code. Defining constants results in easier program maintenance and
+better readability.</font></small></p>
 
-<p>DELTA Forth only allows defining constants outside words.</p>
+<p><small><font face="Verdana">DELTA Forth only allows defining constants outside words.</font></small></p>
 
-<p><strong>Example:</strong></p>
-
-<blockquote>
-  <p><strong>10 20 VARIABLE VAR20</strong></p>
-  <p>This example creates a variable and associates the value 20. The value 10 is lost, as
-  it is not associated with anything. When executing VAR20, the corresponding value is
-  placed on the stack.</p>
-</blockquote>
-
-<p><strong>Variables</strong></p>
-
-<p>In DELTA Forth, variables are a special kind of constants. They place a value on the
-stack as well, but that value represents an address when the programmer can store
-something. Each time you define a variable, the allocated address is different. Like the
-constants, variables can be defined only outside words.</p>
-
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
 <blockquote>
-  <p><strong>VARIABLE VAR1</strong></p>
-  <p><strong>VARIABLE VAR2</strong></p>
-  <p>If executed, the two variables will place different address values on the stack, as
-  allocated at compile time. Optionally, if the default allocated space is insufficient (1
-  cell), we can use the <strong>ALLOT </strong>word that increases the amount of reserved
-  space.</p>
+  <p><small><font face="Verdana"><strong>10 20 VARIABLE VAR20</strong></font></small></p>
+  <p><small><font face="Verdana">This example creates a variable and associates the value
+  20. The value 10 is lost, as it is not associated with anything. When executing VAR20, the
+  corresponding value is placed on the stack.</font></small></p>
 </blockquote>
 
-<p><strong>Example:</strong></p>
+<p><small><font face="Verdana"><strong>Variables</strong></font></small></p>
+
+<p><small><font face="Verdana">In DELTA Forth, variables are a special kind of constants.
+They place a value on the stack as well, but that value represents an address when the
+programmer can store something. Each time you define a variable, the allocated address is
+different. Like the constants, variables can be defined only outside words.</font></small></p>
+
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
 
 <blockquote>
-  <p><strong>VARIABLE MORESPACE 20 ALLOT</strong></p>
-  <p>In this example we created variable MORESPACE and reserved 20 additional cells,
-  resulting a total of 21 cells.</p>
+  <p><small><font face="Verdana"><strong>VARIABLE VAR1</strong></font></small></p>
+  <p><small><font face="Verdana"><strong>VARIABLE VAR2</strong></font></small></p>
+  <p><small><font face="Verdana">If executed, the two variables will place different address
+  values on the stack, as allocated at compile time. Optionally, if the default allocated
+  space is insufficient (1 cell), we can use the <strong>ALLOT </strong>word that increases
+  the amount of reserved space.</font></small></p>
 </blockquote>
 
-<p><img src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
-href="index.htm">Back to main page</a></p>
+<p><small><font face="Verdana"><strong>Example:</strong></font></small></p>
+
+<blockquote>
+  <p><small><font face="Verdana"><strong>VARIABLE MORESPACE 20 ALLOT</strong></font></small></p>
+  <p><small><font face="Verdana">In this example we created variable MORESPACE and reserved
+  20 additional cells, resulting a total of 21 cells.</font></small></p>
+</blockquote>
+
+<p><small><font face="Verdana"><img src="violet.gif" align="middle" width="40" height="40">&nbsp;&nbsp;&nbsp;
+<a href="index.htm">Back to main page</a></font></small></p>
 </body>
 </html>
