@@ -1,9 +1,13 @@
-* Delta Forth .NET 1.1
-a) Fixed bugs described in articles KB10-01, KB10-02
-b) Added the Permutation sample to show how to implement
-   backtracking in Forth
+* Delta Forth .NET 1.2
+a) Compiled Forth modules may now be strongly signed (see the /KEY option)
+b) Added the Hanoi.4th sample program.
+c) Delta Forth documentation now comes in the popular RTF format.
+d) Changed the install program (I now use the Nullsoft Install System).
 
-* Delta Forth .NET 1.0
+* Delta Forth .NET 1.1
+a) Fixed bugs described in articles KB01-01, KB01-02
+
+* Delta Forth .NET 1.0 Release
 a) Fixed bugs described in articles KB10B2A-01, KB10B2A-02
 b) Added the /FS, /RS and /MAP command-line options
 c) Added enhanced library samples

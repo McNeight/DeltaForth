@@ -18,6 +18,7 @@
   PARTICULAR PURPOSE.
   -------------------------------------------------------------------- )
 
+
 \ Number of elements (change as desired)
 7 constant N
 
