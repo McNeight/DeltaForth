@@ -1,5 +1,5 @@
 (2-cell DELTA Forth stack operations)
-(Copyright 1998 Valer BOCAN <vbocan@usa.net>)
+(Copyright 1998 Valer BOCAN <vbocan@dataman.ro>)
 
 : 2DUP
    OVER OVER

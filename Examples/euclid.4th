@@ -1,4 +1,4 @@
-( DELTA Forth Example File  - Copyright 1998 Valer BOCAN <vbocan@usa.net> )
+( DELTA Forth Example File  - Copyright 1998 Valer BOCAN <vbocan@dataman.ro> )
 
 \ Greatest common divider (Euclid's algorhythm)
 

@@ -1,0 +1,22 @@
+What's new
+
+1.0
+1. First non-alpha release
+2. Source code freely available
+
+
+
+0.95 Alpha
+1. Added command line parameters
+2. Added support for local variables
+3. Bundled the Algebraic to RPN/Forth Converter
+
+
+
+0.8 Alpha
+
+1. Added the DUMP primitive
+2. Added support for external libraries
+3. Added the COUNT primitive
+4. Added the <# #> conversion words.
+5. Added the EXIT primitive

@@ -1,7 +1,7 @@
 /*
 **********************************************************
 	External DELTA Forth Library    v1.0
-	Copyright (C)1999 Valer BOCAN <vbocan@usa.net>
+	Copyright (C)1999 Valer BOCAN <vbocan@dataman.ro>
 	All Rights Reserved
 
 	IO Routines for handling files

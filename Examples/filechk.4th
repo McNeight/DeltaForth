@@ -1,4 +1,4 @@
-( DELTA Forth Example File  - Copyright 1999 Valer BOCAN <vbocan@usa.net> )
+( DELTA Forth Example File  - Copyright 1999 Valer BOCAN <vbocan@dataman.ro> )
 
 \ Using external Java libraries
 \ This program generates a report in a text file, based on the information

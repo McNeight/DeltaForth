@@ -1,0 +1,6 @@
+Files in this directory have been generated using the
+Java Development Kit 2 version 1.3 for Windows.
+
+If for any reason, the DELTA Forth product fails to work properly in your
+environment, you may wish to recompile each component. Source files can be
+found in the Source Code directory.

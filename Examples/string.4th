@@ -1,4 +1,4 @@
-( DELTA Forth Example File  - Copyright 1999 Valer BOCAN <vbocan@usa.net> )
+( DELTA Forth Example File  - Copyright 1999 Valer BOCAN <vbocan@dataman.ro> )
 
 \ Demonstrates the use of string conversion primitives
 

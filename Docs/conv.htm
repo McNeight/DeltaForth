@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>String Conversion</title>
+</head>
+
+<body background="back.gif">
+
+<h1><a name="top"><small><font face="Verdana">Int-to-String Conversion</font></small></a></h1>
+
+<hr>
+
+<p><small><font face="Verdana">Forth uses a very powerful string conversion scheme and it
+is very different of what we can find in other systems. Below is a description of the
+primitives used in converting an integer from the stack to a string. For an example of
+using string conversion primitives, please see the example files.</font></small></p>
+<div align="center"><center>
+
+<table border="1" width="80%" height="126">
+  <tr>
+    <td width="27%" align="center" height="19"><small><font face="Verdana"><strong>Word</strong></font></small></td>
+    <td width="73%" align="center" height="19"><small><font face="Verdana"><strong>Description
+    / Action</strong></font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><small><font face="Verdana"><strong>&lt;# ( n --- )</strong></font></small></td>
+    <td width="73%" height="19"><small><font face="Verdana">Starts conversion of the integer
+    on the top of stack.</font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="20"><small><font face="Verdana"><strong>#</strong></font></small></td>
+    <td width="73%" height="20"><small><font face="Verdana">Converts one digit.</font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><small><font face="Verdana"><strong>#S</strong></font></small></td>
+    <td width="73%" height="19"><small><font face="Verdana">Converts all digits.</font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><small><font face="Verdana"><strong>HOLD ( c --- )</strong></font></small></td>
+    <td width="73%" height="19"><small><font face="Verdana">Places on the output string the
+    character c.</font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><small><font face="Verdana"><strong>SIGN</strong></font></small></td>
+    <td width="73%" height="19"><small><font face="Verdana">Places a &quot;-&quot; in the
+    output string if the number is negative.</font></small></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><small><font face="Verdana"><strong>#&gt; ( --- addr n)</strong></font></small></td>
+    <td width="73%" height="19"><small><font face="Verdana">Ends conversion. Leaves address
+    and length of string on the stack.</font></small></td>
+  </tr>
+</table>
+</center></div>
+
+<p><small><font face="Verdana"><img src="violet.gif" align="middle" width="40" height="40">&nbsp;&nbsp;&nbsp;
+<a href="index.htm">Back to main page</a></font></small></p>
+</body>
+</html>

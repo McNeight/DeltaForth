@@ -1,12 +1,12 @@
 +----------------------------------+
 |       DELTA Forth System         |
-|       Version  Alpha 0.8         |
-|     (C)1997-1999 Valer BOCAN     |
+|           Version 1.0            |
+|     (C)1997-2000 Valer BOCAN     |
 +----------------------------------+
 |    Platform independent Forth    |
 |     compiler/interpreter,        |
 |  HTML documentation & examples   |
 |                                  |
-|    NOTE: Java runtime needed     |
+|   Source code freely available   |
 +----------------------------------+
-    Released: March 4, 1999
+    Released: November 6, 2000
