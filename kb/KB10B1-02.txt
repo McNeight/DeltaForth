@@ -1,0 +1,16 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0 Beta 1
+----
+
+SYMPTOMS:
+Forth libraries cannot be called from external .NET programs.
+
+CAUSE:
+There is no default parameterless constructor for the runtime type. The default
+parameter erroneously required a string.
+
+STATUS:
+Fixed.
+
+
+Last reviewed: October 29, 2001

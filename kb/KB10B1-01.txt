@@ -1,0 +1,20 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0 Beta 1
+----
+
+SYMPTOMS:
+The compiler erroneously recognizes as reserved the following words:
+	- EXTERNAL
+	- LOCAL
+	- BASE
+	- STATE
+	- TEXT
+
+CAUSE:
+The compiler symbol table was populated with the wrong set of words.
+
+STATUS:
+Fixed.
+
+
+Last reviewed: October 25, 2001

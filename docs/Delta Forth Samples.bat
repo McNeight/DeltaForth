@@ -1,6 +1,6 @@
 @ECHO OFF
 ECHO Delta Forth .NET Sample Files
-ECHO Copyright (C)2001 Valer BOCAN (vbocan@dataman.ro)
+ECHO Copyright (C)2001-2002 Valer BOCAN (vbocan@dataman.ro)
 ECHO Get latest updates from http://www.dataman.ro/dforth
 
 SET PATH=%PATH%;"C:\Program Files\Delta Forth .NET\bin"

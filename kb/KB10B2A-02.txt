@@ -1,0 +1,17 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0 Beta 2a
+----
+
+SYMPTOMS:
+Delta Forth programs cannot call methods in libraries written with other .NET
+tools if the classes are nested within namespaces.
+
+CAUSE:
+Separating the class name from the method name is done by looking for the first
+dot sign from the left. Instead, the parsing should be done from the right.
+
+STATUS:
+Fixed in version 1.0
+
+
+Last reviewed: January 19, 2002

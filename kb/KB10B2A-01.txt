@@ -1,0 +1,17 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0 Beta 2a
+----
+
+SYMPTOMS:
+The DLL libraries created with versions Beta 2a and earlier cannot be loaded
+when the system has .NET Framework RC or later.
+
+CAUSE:
+DLL libraries should not have an entry point defined, therefore the MAIN word
+should be called explicitly by the user.
+
+STATUS:
+Fixed in version 1.0
+
+
+Last reviewed: January 19, 2002

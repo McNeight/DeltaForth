@@ -1,3 +1,12 @@
+* Delta Forth .NET 1.0 Release
+a) Fixed bugs described in articles KB10B2A-01, KB10B2A-02
+b) Added the /FS, /RS and /MAP command-line options
+c) Added enhanced library samples
+d) Corrected a few typos in the documentation
+
+* Delta Forth .NET Beta 2a
+a) Fixed bug described in article KB10B2-01
+
 * Delta Forth .NET Beta 2
 
 a) Fixed bugs described in articles KB10B1-01, KB10B1-02, KB10B1-03

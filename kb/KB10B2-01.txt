@@ -1,0 +1,26 @@
+The information in this article applies to:
+	Delta Forth .NET 1.0 Beta 2
+----
+
+SYMPTOMS:
+The IL code generator erroneously builds the ForthStack and ReturnStack objects
+as arrays of integer arrays:
+
+	IL_0000: ldc.i4	0x80000
+	IL_0005: newarr int32[]		// *
+	IL_000a: stsfld	int32[] DeltaForthEngine::ForthStack
+	IL_000f: ldc.i4	0x400
+	IL_0014: newarr	int32[]		// *
+	IL_0019: stsfld	int32[] DeltaForthEngine::ReturnStack
+
+CAUSE:
+Human error. :-)
+
+STATUS:
+Fixed.
+
+Thanks to Brad Merrill <bmerrill@microsoft.com> from Microsoft Corp. for
+helping me track down this error.
+
+
+Last reviewed: December 10, 2001
