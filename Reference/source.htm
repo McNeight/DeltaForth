@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Source Files Prerequisites</title>
+</head>
+
+<body background="images/back.gif">
+
+<h1>Source Files Prerequisites</h1>
+
+<hr>
+
+<p>The DELTA Forth system can handle plain ASCII source files. They can be created under
+any operating system using appropriate editors. For the MS-DOS platform you can use Edit
+or the Norton Editor and for the Windows platform, Notepad is a good choice. Usually, a
+DELTA Forth source file has the <strong>.4th</strong> extension, but that may be
+different, according to your needs.</p>
+
+<h2><strong>Comments</strong></h2>
+
+<p>In DELTA Forth, just like in any other Forth system, there are ways to introduce
+comments in source files. A multiline comment is inserted between parenthesis. A single
+line comment is inserted using the back-slash sign.</p>
+
+<p><strong>Example:</strong> </p>
+
+<blockquote>
+  <p><code>( This is a comment</code></p>
+  <p><code>spread across</code></p>
+  <p><code>multiple lines. )</code></p>
+  <p><code>\ This is a one-line comment</code></p>
+</blockquote>
+
+<p>Please notice the space after the '(' and '\'.</p>
+
+<h2><strong>Include files</strong></h2>
+
+<p>If, for any reason, you need to include the contents of a file into the currently
+compiling file, use the <strong>LOAD</strong> directive (outside words only).</p>
+
+<p><strong>Example:</strong></p>
+
+<blockquote>
+  <p><code>LOAD 2stack.4th \ Include file for double-wide stack operations</code></p>
+</blockquote>
+
+<h2><strong>Words</strong></h2>
+
+<p>A word definition begins with a colon followed by a space and the name of the word, no
+longer than 31 characters. The word definition must end with a semicolon, before the end
+of the file.</p>
+
+<p><strong>Example:</strong></p>
+
+<blockquote>
+  <p><code>: HELLO</code></p>
+  <p><code>.&quot; Hello world!&quot; CR</code></p>
+  <p><code>;</code></p>
+</blockquote>
+
+<p>The program begins execution with the word MAIN, which must be defined somewhere in the
+source code. Not having a MAIN word defined will issue a compiling error.</p>
+
+<hr>
+
+<p><img src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
+href="index.htm">Back to main page</a></p>
+</body>
+</html>

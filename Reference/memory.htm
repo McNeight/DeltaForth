@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Memory Operations</title>
+</head>
+
+<body background="images/back.gif">
+
+<h1><a name="top">Memory Operation</a>s</h1>
+
+<hr>
+
+<p>DELTA Forth uses a 32-bit wide cell memory structure. Each cell can store either an
+address or an integer value. Current release limits the available memory to&nbsp; 1048576
+cells. Due to the 32-bit nature of the cells, the programmer should reconsider the style
+of programming in Forth. All source code should compile without modifications, although
+errors are possible.</p>
+<div align="center"><center>
+
+<table border="1" width="80%" height="126">
+  <tr>
+    <td width="27%" align="center" height="19"><strong>Word</strong></td>
+    <td width="73%" align="center" height="19"><strong>Description / Action</strong></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>C (addr --- n) &quot;fetch&quot;</strong></td>
+    <td width="73%" height="19">Reads the content of a specified memory location and places
+    the result on top of stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="20"><strong>? (addr --- ) &quot;question-mark&quot;</strong></td>
+    <td width="73%" height="20">Displays the content of a memory location</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>! (n addr --- ) &quot;store&quot;</strong></td>
+    <td width="73%" height="19">Stores a value at the specified memory address</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>+! (n addr --- ) &quot;plus store&quot;</strong></td>
+    <td width="73%" height="19">Adds a value to the content of a specified memory address</td>
+  </tr>
+</table>
+</center></div>
+
+<p><img src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
+href="index.htm">Back to main page</a></p>
+</body>
+</html>

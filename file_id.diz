@@ -1,0 +1,11 @@
++----------------------------------+
+|       DELTA Forth System         |
+|       Version  Alpha 0.5         |
++----------------------------------+
+|    Platform independent Forth    |
+|     compiler/interpreter,        |
+|  HTML documentation & examples   |
+|                                  |
+|    NOTE: Java runtime needed     |
++----------------------------------+
+     Released: August 25, 1998

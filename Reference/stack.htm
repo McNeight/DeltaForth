@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Stack Operations</title>
+</head>
+
+<body background="images/back.gif">
+
+<h1><a name="top">Stack Operation</a>s</h1>
+
+<hr>
+
+<p>The DELTA Forth stack is organized as is any other Forth system. The origin is at the
+address pointed by system variable S0. The stack grows downwards.</p>
+<div align="center"><center>
+
+<table border="1" width="80%" height="126">
+  <tr>
+    <td width="27%" align="center" height="19"><strong>Word</strong></td>
+    <td width="73%" align="center" height="19"><strong>Description / Action</strong></td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>DUP ( n --- n n )</strong></td>
+    <td width="73%" height="19">Duplicates the value on the top of the stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="20"><strong>-DUP ( n --- n : n n )</strong></td>
+    <td width="73%" height="20">Duplicates the value on the top of the stack if different from
+    0</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>DROP ( n --- )</strong></td>
+    <td width="73%" height="19">Drops the element on top of the stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>SWAP ( n1 n2 --- n2 n1 )</strong></td>
+    <td width="73%" height="19">Swaps the two elements of top of the stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>OVER ( n1 n2 --- n1 n2 n1 )</strong></td>
+    <td width="73%" height="19">Duplicates the element before the on top of the stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>ROT ( n1 n2 n3 --- n2 n3 n1)</strong></td>
+    <td width="73%" height="19">Rotates the last three elements on the top of the stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>SP@</strong></td>
+    <td width="73%" height="19">Returns the current position of the parameter stack pointer</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>RP@</strong></td>
+    <td width="73%" height="19">Returns the current position of the return stack pointer</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>SP!</strong></td>
+    <td width="73%" height="19">Flushes the parameter stack</td>
+  </tr>
+  <tr>
+    <td width="27%" height="19"><strong>RP!</strong></td>
+    <td width="73%" height="19">Flushes the return stack</td>
+  </tr>
+</table>
+</center></div>
+
+<p><img src="images/violet.gif" width="40" height="40" align="middle">&nbsp;&nbsp;&nbsp; <a
+href="index.htm">Back to main page</a></p>
+</body>
+</html>
