@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2006 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.
@@ -2059,7 +2059,7 @@ namespace DeltaForth
 		//		while(Dummy1 > 0)
 		//		{
 		//			Dummy3 = Console.Read();
-		//			if(Dummy3 == 13) 
+		//			if(Dummy3 == 10) 
 		//			{
 		//				ForthStack[Dummy2++] = 0;
 		//				break;
@@ -2085,7 +2085,7 @@ namespace DeltaForth
 			ilgen.Emit(OpCodes.Call, ReadCharMethod);
 			ilgen.Emit(OpCodes.Stsfld, Dummy3);
 			ilgen.Emit(OpCodes.Ldsfld, Dummy3);
-			ilgen.Emit(OpCodes.Ldc_I4, 13);
+			ilgen.Emit(OpCodes.Ldc_I4, 10);
 			ilgen.Emit(OpCodes.Bne_Un_S, lb2);
 			ilgen.Emit(OpCodes.Ldsfld, ForthStack);
 			ilgen.Emit(OpCodes.Ldsfld, Dummy2);

@@ -1,6 +1,6 @@
 /*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2004 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
+ * Copyright (C)1997-2006 Valer BOCAN, Romania (vbocan@dataman.ro, http://www.dataman.ro)
  * 
  * This program and its source code is distributed in the hope that it will
  * be useful. No warranty of any kind is provided.
@@ -26,8 +26,8 @@ namespace DeltaForth
 
 		static void DisplayLogo()
 		{
-			Console.WriteLine("Delta Forth .NET Compiler, Version 1.3");
-			Console.WriteLine("Copyright (C)1997-2004 Valer BOCAN (http://www.dataman.ro).\n\rAll Rights Reserved.\n\r");
+			Console.WriteLine("Delta Forth .NET Compiler, Version 1.31");
+			Console.WriteLine("Copyright (C)1997-2006 Valer BOCAN (http://www.dataman.ro).\n\rAll Rights Reserved.\n\r");
 		}
 
 		static void Usage()
