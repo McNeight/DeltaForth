@@ -3,14 +3,14 @@
 
   Summary:	The traditional "Hello World" program
 
-  Origin:	Valer BOCAN <vbocan@dataman.ro>
+  Origin:	Valer BOCAN, PhD <valer@bocan.ro>
 
   Date:		October 11, 2001
 
   --------------------------------------------------------------------
   This file is part of the Delta Forth Code Samples.
 
-  Copyright (C)2001 Valer BOCAN  All rights reserved.
+  Copyright (C)2001 Valer BOCAN, PhD  All rights reserved.
 
   THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE

@@ -1,0 +1,21 @@
+The information in this article applies to:
+	Delta Forth .NET 1.31
+----
+
+SYMPTOMS:
+DO-LOOP structure behaves incorrectly.
+The following Forth code:
+
+:MAIN 5 0 DO I . SPACE LOOP;
+
+should print 0 1 2 3 4 but instead it prints 0 1 2 3 4 5.
+
+The same applies for the step loop version (+LOOP).
+
+CAUSE:
+DO-LOOP index was not decremented by 1.
+
+STATUS:
+Fixed in version 1.4
+
+Last reviewed: October 26, 2011

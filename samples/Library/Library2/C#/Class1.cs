@@ -16,7 +16,7 @@ namespace Library2
 		[STAThread]
 		static void Main(string[] args)
 		{
-			InitDLL("ForthLibrary.dll", "ForthLib");
+            if (!InitDLL("ForthLibrary.dll", "ForthLib")) return;            
 			Push(30);
 			Push(18);
 			CallForthWord("ADDITION");
@@ -53,12 +53,15 @@ namespace Library2
 				Console.WriteLine("Error: {0}", fle.Message);
 				return false;
 			}
-			calType = calAssembly.GetType(ClassName, false, true);
-			if(calType == null) 
-			{
-				Console.WriteLine("Runtime Error: Could not load class {0} from library.", ClassName);
-				return false;
-			}
+            try
+            {
+                calType = calAssembly.GetType(ClassName, true, true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Runtime Error: Could not load class {0} from library. Reason: {1}", ClassName, ex.Message);
+                return false;
+            }
 
 			CallForthWord("MAIN");
 

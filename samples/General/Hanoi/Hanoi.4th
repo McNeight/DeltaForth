@@ -3,14 +3,14 @@
 
   Summary:	Towers of Hanoi example implemented in Delta Forth
 
-  Origin:	Valer BOCAN <vbocan@dataman.ro>
+  Origin:	Valer BOCAN, PhD <valer@bocan.ro>
 
   Date:		May 11, 2003
 
   --------------------------------------------------------------------
   This file is part of the Delta Forth Code Samples.
 
-  Copyright (C)2003 Valer BOCAN  All rights reserved.
+  Copyright (C)2003 Valer BOCAN, PhD  All rights reserved.
 
   THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE

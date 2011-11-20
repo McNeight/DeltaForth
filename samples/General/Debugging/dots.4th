@@ -3,14 +3,14 @@
 
   Summary:	The .S word: shows the content of the parameter stack
 
-  Origin:	Valer BOCAN <vbocan@dataman.ro>
+  Origin:	Valer BOCAN, PhD <valer@bocan.ro>
 
   Date:		September 22, 2004
 
   --------------------------------------------------------------------
   This file is part of the Delta Forth Code Samples.
 
-  Copyright (C)2004 Valer BOCAN  All rights reserved.
+  Copyright (C)2004 Valer BOCAN, PhD  All rights reserved.
 
   THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE

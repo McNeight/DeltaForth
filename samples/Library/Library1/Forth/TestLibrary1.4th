@@ -4,14 +4,14 @@
   Summary:	Shows how to call a function in a library generated
 		by a .NET compiler (C#)
 
-  Origin:	Valer BOCAN <vbocan@dataman.ro>
+  Origin:	Valer BOCAN, PhD <valer@bocan.ro>
 
   Date:		January 18, 2002
 
   --------------------------------------------------------------------
   This file is part of the Delta Forth Code Samples.
 
-  Copyright (C)2002 Valer BOCAN  All rights reserved.
+  Copyright (C)2002 Valer BOCAN, PhD  All rights reserved.
 
   THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE

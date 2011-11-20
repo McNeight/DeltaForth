@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{192B7F78-4ADB-4330-AF07-79DBA0ECEAD6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>DeltaForth</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>DeltaForth</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>DeltaForth.ForthConsole</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Code Generator\DODescriptor.cs" />
+    <Compile Include="Code Generator\BEGINDescripto.cs" />
+    <Compile Include="Code Generator\IFDescriptor.cs" />
+    <Compile Include="Compiler\ForthCompiler.cs" />
+    <Compile Include="Data Structures\CompilerMetadata.cs" />
+    <Compile Include="Data Structures\ExternalWord.cs" />
+    <Compile Include="Data Structures\ForthWord.cs" />
+    <Compile Include="Data Structures\ForthConstant.cs" />
+    <Compile Include="Data Structures\ForthLocalVariable.cs" />
+    <Compile Include="Data Structures\ForthVariable.cs" />
+    <Compile Include="Data Structures\ForthAtom.cs" />
+    <Compile Include="Code Generator\ForthCodeGenerator.cs" />
+    <Compile Include="Compiler\ForthConsole.cs" />
+    <Compile Include="Parser\ForthParser.cs" />
+    <Compile Include="Syntactic Analyzer\SyntacticExceptionType.cs" />
+    <Compile Include="Syntactic Analyzer\ForthSyntacticAnalyzer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
