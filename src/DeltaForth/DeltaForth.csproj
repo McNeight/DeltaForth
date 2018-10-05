@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{192B7F78-4ADB-4330-AF07-79DBA0ECEAD6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
@@ -11,24 +11,24 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>DeltaForth</RootNamespace>
@@ -47,22 +47,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Code Generator\DODescriptor.cs" />
-    <Compile Include="Code Generator\BEGINDescripto.cs" />
-    <Compile Include="Code Generator\IFDescriptor.cs" />
+    <Compile Include="CodeGenerator\DODescriptor.cs" />
+    <Compile Include="CodeGenerator\BEGINDescripto.cs" />
+    <Compile Include="CodeGenerator\IFDescriptor.cs" />
     <Compile Include="Compiler\ForthCompiler.cs" />
-    <Compile Include="Data Structures\CompilerMetadata.cs" />
-    <Compile Include="Data Structures\ExternalWord.cs" />
-    <Compile Include="Data Structures\ForthWord.cs" />
-    <Compile Include="Data Structures\ForthConstant.cs" />
-    <Compile Include="Data Structures\ForthLocalVariable.cs" />
-    <Compile Include="Data Structures\ForthVariable.cs" />
-    <Compile Include="Data Structures\ForthAtom.cs" />
-    <Compile Include="Code Generator\ForthCodeGenerator.cs" />
+    <Compile Include="DataStructures\CompilerMetadata.cs" />
+    <Compile Include="DataStructures\ExternalWord.cs" />
+    <Compile Include="DataStructures\ForthWord.cs" />
+    <Compile Include="DataStructures\ForthConstant.cs" />
+    <Compile Include="DataStructures\ForthLocalVariable.cs" />
+    <Compile Include="DataStructures\ForthVariable.cs" />
+    <Compile Include="DataStructures\ForthAtom.cs" />
+    <Compile Include="CodeGenerator\ForthCodeGenerator.cs" />
     <Compile Include="Compiler\ForthConsole.cs" />
     <Compile Include="Parser\ForthParser.cs" />
-    <Compile Include="Syntactic Analyzer\SyntacticExceptionType.cs" />
-    <Compile Include="Syntactic Analyzer\ForthSyntacticAnalyzer.cs" />
+    <Compile Include="SyntacticAnalyzer\SyntacticExceptionType.cs" />
+    <Compile Include="SyntacticAnalyzer\ForthSyntacticAnalyzer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
