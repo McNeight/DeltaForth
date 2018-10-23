@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>
+      <!-- .NET Standard -->
+      netstandard1.0;netstandard1.1;netstandard1.2;netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;
+      netstandard2.0;
+      <!-- .NET Core -->
+      netcoreapp1.0;netcoreapp1.1;
+      netcoreapp2.0;netcoreapp2.1;
+      <!-- .NET Framework -->
+      net45;net451;net452;
+      net46;net461;net462;
+      net47;net471;net472;
+    </TargetFrameworks>
+    <DocumentationFile>..\..\artifacts\bin\$(Configuration)\$(TargetFramework)\DeltaForth.Collections.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>

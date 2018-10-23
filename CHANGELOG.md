@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added default .editorconfig file from Visual Studio 2017.
 - Added latest .gitignore from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+- Created new DeltaForth.Collections library
 
 ### Changed
-- Moved source into src\DeltaForth\ to reflect namespace structure.
+- Moved source into src/DeltaForth to reflect namespace structure.
 
 ### Fixed
 ### Removed
