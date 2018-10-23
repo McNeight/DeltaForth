@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added default .editorconfig file from Visual Studio 2017.
 - Added latest .gitignore from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
-- Created new DeltaForth.Collections library
+- Created new DeltaForth.Collections library.
+- Added [small-tester.f from Josh Grams](http://qualdan.com/forth/small-tester.f).
+- Added [Forth 2012 Test Programs from Gerry Jackson](https://github.com/gerryjackson/forth2012-test-suite) as a submodule under samples/TestSuites.
 
 ### Changed
 - Moved source into src/DeltaForth to reflect namespace structure.
@@ -17,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Deleted all binaries (*.dll and *.exe) from repository.
 - Removed docs/whatsnew.txt & replaced with this changelog.
+- Deleted leftover Visual Studio files (*.suo & *.exe.*)
 
 ## [1.4] - 2011-11-20
 ### Changed
