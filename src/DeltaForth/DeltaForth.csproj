@@ -7,9 +7,11 @@
       <!-- netcoreapp1.0;netcoreapp1.1; -->
       <!-- netcoreapp2.0;netcoreapp2.1; -->
       <!-- .NET Framework -->
-      net45;net451;net452;
-      net46;net461;net462;
-      net47;net471;net472;
+      <!-- net45;net451;net452; -->
+      <!-- net46; -->
+      net461;
+      <!-- net462; -->
+      <!-- net47;net471;net472; -->
     </TargetFrameworks>
     <SignAssembly>False</SignAssembly>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -18,6 +20,7 @@
     <RootNamespace>DeltaForth</RootNamespace>
     <AssemblyName>DeltaForth</AssemblyName>
     <StartupObject>DeltaForth.ForthConsole</StartupObject>
+    <DocumentationFile>..\..\artifacts\bin\$(Configuration)\$(TargetFramework)\DeltaForth.xml</DocumentationFile>
   </PropertyGroup>
 
   <!-- Nuget specific tags -->
@@ -31,7 +34,8 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/McNeight/DeltaForth</RepositoryUrl>
     <Copyright>Copyright © 1997-2011 Valer Bocan
-    Copyright © 2018 Neil McNeight</Copyright>
+    Copyright © 2018 Neil McNeight
+    All rights reserved.</Copyright>
     <PackageTags>forth</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageReleaseNotes></PackageReleaseNotes>
@@ -44,5 +48,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta009">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeltaForth.Collections\DeltaForth.Collections.csproj" />
+  </ItemGroup>
 
 </Project>

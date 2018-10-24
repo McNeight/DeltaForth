@@ -11,11 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created new DeltaForth.Collections library.
 - Added [small-tester.f from Josh Grams](http://qualdan.com/forth/small-tester.f).
 - Added [Forth 2012 Test Programs from Gerry Jackson](https://github.com/gerryjackson/forth2012-test-suite) as a submodule under samples/TestSuites.
+- Added NuGet reference to StyleCop.Analyzers package.
+- Created stylecop.json configuration file and GlobalSuppressions.cs file.
+- Added copy of MIT License.
 
 ### Changed
 - Moved source into src/DeltaForth to reflect namespace structure.
 - Moved source out of subdirectories where it made no sense to have separate namespace.
 - Modified default .editorconfig to add 'this.' qualification to fields, properties, methods, and events.
+- Updated a portion of files to be compliant with StyleCop formatting.
 
 ### Fixed
 ### Removed
