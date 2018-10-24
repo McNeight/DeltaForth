@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Deleted all binaries (*.dll and *.exe) from repository.
 - Removed docs/whatsnew.txt & replaced with this changelog.
-- Deleted leftover Visual Studio files (*.suo & *.exe.*)
+- Deleted leftover Visual Studio files (*.suo, *.exe.*, and *.csproj.user)
 
 ## [1.4] - 2011-11-20
 ### Changed
