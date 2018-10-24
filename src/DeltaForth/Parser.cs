@@ -25,7 +25,7 @@ namespace DeltaForth.Parser
     /// Date of creation:       September 5, 2001
     /// Date of last update:    October 25, 2011
     /// </remarks>
-	internal class ForthParser
+	internal class Parser
     {
         #region Local variables
         /// <summary>
@@ -48,7 +48,7 @@ namespace DeltaForth.Parser
         /// Public constructor
         /// </summary>
         /// <param name="SourceFileName">Source file with Forth code.</param>
-		public ForthParser(string SourceFileName)
+		public Parser(string SourceFileName)
 		{			
 			ProcessedFiles = new HashSet<string>();
             this.SourceFileName = SourceFileName;

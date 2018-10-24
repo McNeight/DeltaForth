@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
  * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
  * 
@@ -12,7 +12,7 @@ using System;
 using System.Collections;
 using System.IO;
 using DeltaForth.DataStructures;
-using DeltaForth.CodeGenerator;
+using DeltaForth.CodeGen;
 using DeltaForth.Parser;
 using DeltaForth.SyntacticAnalyzer;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace DeltaForth
 	///		The ForthCompiler class requires a Forth source file as a parameter and an output file
 	///		to generate code to.
 	/// </summary>
-	public class ForthCompiler
+	public class Compiler
     {
         #region Event Delegate
         public delegate void CompilerEventHandler(object sender, object e);
@@ -155,7 +155,7 @@ namespace DeltaForth
         public CompilerMetadata MetaData { get { return _MetaData; } }        
         #endregion
 
-        public ForthCompiler()
+        public Compiler()
         {            			
 			
 		}
@@ -169,19 +169,19 @@ namespace DeltaForth
             {
                 // Parsing
                 SignalParsingStart(SourceFileName);
-                ForthParser parser = new ForthParser(SourceFileName);
+                var parser = new Parser.Parser(SourceFileName);
                 var SourceAtoms = parser.GetForthAtoms();
                 SignalParsingEnd();
 
                 // Syntactic analysis
                 SignalSyntacticAnalysisStart();
-                ForthSyntacticAnalyzer analyzer = new ForthSyntacticAnalyzer(SourceAtoms);
+                var analyzer = new SyntacticAnalyzer.SyntacticAnalyzer(SourceAtoms);
                 _MetaData = analyzer.GetMetaData();
                 SignalSyntacticAnalysisEnd();
 
                 // Code generation
                 SignalCodeGenerationStart();
-                ForthCodeGenerator generator = new ForthCodeGenerator(MetaData, TargetFileName, TargetDirectory, SignatureFile, GenerateExecutable, GenerateStackFrames, ForthStackSize, ReturnStackSize);
+                CodeGenerator generator = new CodeGenerator(MetaData, TargetFileName, TargetDirectory, SignatureFile, GenerateExecutable, GenerateStackFrames, ForthStackSize, ReturnStackSize);
                 generator.DoGenerateCode();
                 SignalCodeGenerationEnd();
                 

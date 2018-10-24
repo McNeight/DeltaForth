@@ -15,12 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Moved source into src/DeltaForth to reflect namespace structure.
 - Moved source out of subdirectories where it made no sense to have separate namespace.
+- Modified default .editorconfig to add 'this.' qualification to fields, properties, methods, and events.
 
 ### Fixed
 ### Removed
 - Deleted all binaries (*.dll and *.exe) from repository.
 - Removed docs/whatsnew.txt & replaced with this changelog.
-- Deleted leftover Visual Studio files (*.suo, *.exe.*, and *.csproj.user)
+- Deleted leftover Visual Studio files (*.suo, *.exe.*, and *.csproj.user).
+- Removed 'Forth' from filenames & classes already within the DeltaForth namespace.
 
 ## [1.4] - 2011-11-20
 ### Changed

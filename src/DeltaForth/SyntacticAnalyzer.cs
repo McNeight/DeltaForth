@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
  * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
  * 
@@ -29,7 +29,7 @@ namespace DeltaForth.SyntacticAnalyzer
 	/// </summary>
 	/// 
 
-	internal class ForthSyntacticAnalyzer
+	internal class SyntacticAnalyzer
 	{
 		private List<ForthVariable> GlobalVariables;	    // List of source global variables
 		private List<ForthLocalVariable> LocalVariables;	// List of source local variables
@@ -59,7 +59,7 @@ namespace DeltaForth.SyntacticAnalyzer
 														"VARIABLE", "ALLOT", "LIBRARY", "LOAD"};
 		
 		// ForthSyntacticAnalyzer constructor
-		public ForthSyntacticAnalyzer(List<ForthAtom> p_SourceAtoms)
+		public SyntacticAnalyzer(List<ForthAtom> p_SourceAtoms)
 		{
 			// Initialize variables
 			GlobalVariables = new List<ForthVariable>();

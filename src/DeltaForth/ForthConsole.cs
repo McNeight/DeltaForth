@@ -110,7 +110,7 @@ namespace DeltaForth
 		}
         #endregion        
 
-        static void DisplayMapInformation(ForthCompiler compiler)
+        static void DisplayMapInformation(Compiler compiler)
         {
             DisplayLineToConsole(string.Empty);
             DisplayLineToConsole("Summary of compilation objects", ConsoleColor.White);
@@ -291,15 +291,15 @@ namespace DeltaForth
             }            
             #endregion            
 			
-            ForthCompiler compiler = new ForthCompiler();
-            compiler.OnCodeGenerationStart      += new ForthCompiler.CompilerEventHandler(compiler_OnCodeGenerationStart);
-            compiler.OnCodeGenerationEnd        += new ForthCompiler.CompilerEventHandler(compiler_OnCodeGenerationEnd);
-            compiler.OnCompilationStart         += new ForthCompiler.CompilerEventHandler(compiler_OnCompilationStart);
-            compiler.OnCompilationEnd           += new ForthCompiler.CompilerEventHandler(compiler_OnCompilationEnd);
-            compiler.OnParsingEnd               += new ForthCompiler.CompilerEventHandler(compiler_OnParsingEnd);
-            compiler.OnParsingStart             += new ForthCompiler.CompilerEventHandler(compiler_OnParsingStart);
-            compiler.OnSyntacticAnalysisEnd     += new ForthCompiler.CompilerEventHandler(compiler_OnSyntacticAnalysisEnd);
-            compiler.OnSyntacticAnalysisStart   += new ForthCompiler.CompilerEventHandler(compiler_OnSyntacticAnalysisStart);
+            Compiler compiler = new Compiler();
+            compiler.OnCodeGenerationStart      += new Compiler.CompilerEventHandler(compiler_OnCodeGenerationStart);
+            compiler.OnCodeGenerationEnd        += new Compiler.CompilerEventHandler(compiler_OnCodeGenerationEnd);
+            compiler.OnCompilationStart         += new Compiler.CompilerEventHandler(compiler_OnCompilationStart);
+            compiler.OnCompilationEnd           += new Compiler.CompilerEventHandler(compiler_OnCompilationEnd);
+            compiler.OnParsingEnd               += new Compiler.CompilerEventHandler(compiler_OnParsingEnd);
+            compiler.OnParsingStart             += new Compiler.CompilerEventHandler(compiler_OnParsingStart);
+            compiler.OnSyntacticAnalysisEnd     += new Compiler.CompilerEventHandler(compiler_OnSyntacticAnalysisEnd);
+            compiler.OnSyntacticAnalysisStart   += new Compiler.CompilerEventHandler(compiler_OnSyntacticAnalysisStart);
 
 			try 
 			{                

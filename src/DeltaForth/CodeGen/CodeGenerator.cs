@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
  * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
  * 
@@ -17,7 +17,7 @@ using System.IO;
 using DeltaForth.DataStructures;
 using System.Collections.Generic;
 
-namespace DeltaForth.CodeGenerator
+namespace DeltaForth.CodeGen
 {
 	/// <summary>
 	/// Delta Forth - The .NET Forth Compiler
@@ -31,7 +31,7 @@ namespace DeltaForth.CodeGenerator
 	/// Description:
 	/// </summary>
 	/// 
-	internal class ForthCodeGenerator
+	internal class CodeGenerator
     {
         #region Local variables
         private AppDomain appDomain;			// Domain where we define the assemblies
@@ -89,7 +89,7 @@ namespace DeltaForth.CodeGenerator
 		private Stack<DODescriptor> DOStack;				// Stack for the DO-LOOP/+LOOP control structure
         #endregion
 
-        public ForthCodeGenerator(CompilerMetadata MetaData, string TargetFileName, string TargetDirectory, string SignatureFileName, bool GenerateExecutable, bool GenerateStackFrames, int ForthStackSize, int ReturnStackSize)
+        public CodeGenerator(CompilerMetadata MetaData, string TargetFileName, string TargetDirectory, string SignatureFileName, bool GenerateExecutable, bool GenerateStackFrames, int ForthStackSize, int ReturnStackSize)
 		{
 			// Initialize variables
 			this.TargetFileName = TargetFileName;

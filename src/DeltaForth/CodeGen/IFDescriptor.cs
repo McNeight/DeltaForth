@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
  * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
  * 
@@ -16,12 +16,12 @@ using System.Threading;
 using System.IO;
 using DeltaForth.DataStructures;
 
-namespace DeltaForth.CodeGenerator
+namespace DeltaForth.CodeGen
 {
-	/// <summary>
+    /// <summary>
     /// Definition of an IF structure used to code IF-ELSE-THEN
-	/// </summary>
-	public class IFDescriptor 
+    /// </summary>
+    public class IFDescriptor 
 	{
         /// <summary>
         /// Label for the ELSE branch
