@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Moved source into src/DeltaForth to reflect namespace structure.
+- Moved source out of subdirectories where it made no sense to have separate namespace.
 
 ### Fixed
 ### Removed
