@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated a portion of files to be compliant with StyleCop formatting.
 
 ### Fixed
+- Fixed the samples/BuildSamples.bat batch file to recursively compile all Forth source files in samples/
+
 ### Removed
 - Deleted all binaries (*.dll and *.exe) from repository.
 - Removed docs/whatsnew.txt & replaced with this changelog.
