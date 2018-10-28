@@ -1,4 +1,4 @@
-(   File:	Variables.deltaforth
+(	File:	Variables.deltaforth
  Summary:	Shows the use of global and local variables.
  License:	CC0
 
@@ -7,13 +7,6 @@
 variable a				\ First variable
 variable b				\ Second variable
 variable tab 1 allot	\ Holds the sum and the product of 'a' and 'b'
-
-: main					\ Entry point
-	initialize			\ Initialize variables
-	sum					\ Computes the sum and stores the result in tab[0]
-	product				\ Computes the sum and stores the result in tab[1]
-	display				\ Displays the operation summary
-;
 
 : initialize
 	10 a !				\ Initialize 'a' with 10
@@ -38,4 +31,11 @@ variable tab 1 allot	\ Holds the sum and the product of 'a' and 'b'
 	tab @ s !			\ Store sum to 's'
 	tab 1+ @ p !		\ Store product to 'p'
 	."The sum is " s ? ." and the product is " p ? cr
+;
+
+: main					\ Entry point
+	initialize			\ Initialize variables
+	sum					\ Computes the sum and stores the result in tab[0]
+	product				\ Computes the sum and stores the result in tab[1]
+	display				\ Displays the operation summary
 ;

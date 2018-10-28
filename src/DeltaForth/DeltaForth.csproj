@@ -19,7 +19,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RootNamespace>DeltaForth</RootNamespace>
     <AssemblyName>DeltaForth</AssemblyName>
-    <StartupObject>DeltaForth.ForthConsole</StartupObject>
+    <StartupObject>DeltaForth.CommandLine</StartupObject>
     <DocumentationFile>..\..\artifacts\bin\$(Configuration)\$(TargetFramework)\DeltaForth.xml</DocumentationFile>
   </PropertyGroup>
 

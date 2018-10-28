@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Delta Forth .NET - World's first Forth compiler for the .NET platform
  * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
  * 
@@ -14,7 +14,7 @@ using System.IO;
 
 namespace DeltaForth
 {
-	public class ForthConsole
+	public class CommandLine
     {
         #region Compiler command-line option values
 		static bool DisplayLogo, QuietMode, ShowTimings, GenerateExecutable, CheckStack, DisplayMap;
