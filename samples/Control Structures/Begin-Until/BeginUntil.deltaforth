@@ -1,0 +1,15 @@
+(   File:	BeginUntil.deltaforth
+ Summary:	Shows the use of the BEGIN-UNTIL control structure.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main					\ Entry point
+	variable cnt		\ Local variable
+	0 cnt !				\ Initialize 'cnt' to 0
+	begin
+		cnt @ 1+ cnt !	\ Increment variable by 1
+		cnt ? space		\ Display the counter value
+		cnt @ 25 >		\ Test if the counter is less than 25
+	until
+;

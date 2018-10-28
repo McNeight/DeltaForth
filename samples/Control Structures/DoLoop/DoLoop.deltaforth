@@ -1,0 +1,13 @@
+(   File:	DoLoop.deltaforth
+ Summary:	Shows the use of the DO-LOOP control structure.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main		\ Entry point
+	25		\ Final value
+	0		\ Initial value
+	do
+		i . space
+	loop
+;

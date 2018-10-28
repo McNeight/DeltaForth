@@ -1,0 +1,9 @@
+(	File:	HelloWorld.deltaforth
+ Summary:	The traditional "Hello World" program.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main 								\ Entry point
+	."Hello World"
+;

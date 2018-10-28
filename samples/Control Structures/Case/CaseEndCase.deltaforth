@@ -1,0 +1,21 @@
+(   File:	CaseEndCase.deltaforth
+ Summary:	Shows the use of the CASE-ENDCASE control structure.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main			\ Entry point
+	2 test cr	\ Test for 2
+	1 test cr	\ Test for 1
+	3 test cr	\ Test for 3
+	4 test cr	\ Test for 4
+;
+
+: test
+	case
+	1 of ."One"   endof
+	2 of ."Two"   endof
+	3 of ."Three" endof
+	."Something else"
+	endcase
+;

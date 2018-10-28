@@ -1,0 +1,16 @@
+(   File:	BeginWhileRepeat.deltaforth
+ Summary:	Shows the use of the BEGIN-WHILE-REPEAT control structure.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main					\ Entry point
+	variable cnt		\ Local variable
+	0 cnt !				\ Initialize 'cnt' to 0
+	begin
+		cnt ? space		\ Display the counter value
+		cnt @ 25 <		\ Test if the counter is less than 25
+	while
+		cnt @ 1+ cnt !	\ Increment variable by 1
+	repeat
+;

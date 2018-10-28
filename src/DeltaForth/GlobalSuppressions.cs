@@ -2,7 +2,7 @@
 // Copyright © 1997-2011 Valer BOCAN
 // Copyright © 2018 Neil McNeight
 // All rights reserved.
-// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// Licensed under the MIT license. See the LICENSE.markdown file in the project root for full license information.
 // </copyright>
 
 // This file is used by Code Analysis to maintain SuppressMessage

@@ -1,98 +1,86 @@
-﻿/*
- * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
- * 
- * This program and its source code is distributed in the hope that it will
- * be useful. No warranty of any kind is provided.
- * Please DO NOT distribute modified copies of the source code.
- * 
- */
+﻿// <copyright file="SyntacticAnalyzer.cs" company="DeltaForth Contributors">
+// Copyright © 1997-2011 Valer BOCAN
+// Copyright © 2018 Neil McNeight
+// All rights reserved.
+// Licensed under the MIT license. See the LICENSE.markdown file in the project root for full license information.
+// </copyright>
 
 using System;
 using System.Collections;
-using System.Text.RegularExpressions;
-using DeltaForth.DataStructures;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+using DeltaForth.DataStructures;
 
 namespace DeltaForth.SyntacticAnalyzer
 {
-	/// <summary>
-	/// Delta Forth - The .NET Forth Compiler
-	/// (C) Valer BOCAN, PhD (valer@bocan.ro)
-	/// 
-	/// Class ForthSyntacticAnalyzer
-	/// 
-	/// Date of creation:	    September 5, 2001
-	/// Date of last update:	November 2, 2011
-	/// 
-	/// Description:
-	/// </summary>
-	/// 
+    /// <summary>
+    /// SyntacticAnalyzer
+    /// </summary>
+    internal class SyntacticAnalyzer
+    {
+        private List<ForthVariable> GlobalVariables;        // List of source global variables
+        private List<ForthLocalVariable> LocalVariables;    // List of source local variables
+        private List<ForthConstant> GlobalConstants;        // List of source global constants
+        private List<ForthWord> Words;                      // List of words defined in the source file
+        private List<ExternalWord> ExternalWords;           // List of external words defined in the source file
+        private string LibraryName;                         // Name of the library to be generated, null if an executable program should be generated
 
-	internal class SyntacticAnalyzer
-	{
-		private List<ForthVariable> GlobalVariables;	    // List of source global variables
-		private List<ForthLocalVariable> LocalVariables;	// List of source local variables
-		private List<ForthConstant> GlobalConstants;	    // List of source global constants
-		private List<ForthWord> Words;      			    // List of words defined in the source file
-		private List<ExternalWord> ExternalWords;	        // List of external words defined in the source file
-		private string LibraryName;			                // Name of the library to be generated, null if an executable program should be generated
+        private readonly List<ForthAtom> SourceAtoms;                // List of source atoms (obtained from a ForthParser)
+        private readonly Stack SourceStack;                          // Stack used when defining variables and constants
+        private bool InWordDefinition;                      // TRUE if parsing inside a word
+        private bool MainDefined;                           // TRUE if the word MAIN has been defined
 
-		private List<ForthAtom> SourceAtoms;		        // List of source atoms (obtained from a ForthParser)
-		private Stack SourceStack;			                // Stack used when defining variables and constants
-		private bool InWordDefinition;		                // TRUE if parsing inside a word
-		private bool MainDefined;			                // TRUE if the word MAIN has been defined
-	
-		private string[] ReservedWords = new string[] {"@", "?", "!", "+!", "DUP", "-DUP", "DROP",
-														"SWAP", "OVER", "ROT", ".", "+", "-", "*",
-														"/", ">R", "R>", "I", "I'", "J", "MOD", "/MOD", "*/",
-														"*/MOD", "MINUS", "ABS", "MIN", "MAX", "1+",
-														"2+", "0=", "0<", "=", "<", ">", "<>", "AND",
-														"OR", "XOR", "EMIT", "CR", "SPACE", "SPACES",
-														"TYPE", "FILL", "ERASE", "BLANKS", "CMOVE", "KEY",
-														"EXPECT", "PAD", "S0", "R0",
-														"SP@", "SP!", "RP@", "RP!", "TIB", "QUERY",
-														"STR2INT", "IF", "ELSE", "THEN", "DO", "LOOP",
-														"+LOOP", "LEAVE", "BEGIN", "INT2STR",
-														"AGAIN", "UNTIL", "WHILE", "REPEAT", "CASE", "OF", "ENDOF",
-														"ENDCASE", "COUNT", "EXIT", "EXTERN", "CONSTANT",
-														"VARIABLE", "ALLOT", "LIBRARY", "LOAD"};
-		
-		// ForthSyntacticAnalyzer constructor
-		public SyntacticAnalyzer(List<ForthAtom> p_SourceAtoms)
-		{
-			// Initialize variables
-			GlobalVariables = new List<ForthVariable>();
-            LocalVariables = new List<ForthLocalVariable>();
-            GlobalConstants = new List<ForthConstant>();
-			Words = new List<ForthWord>();
-			ExternalWords = new List<ExternalWord>();
-			SourceStack = new Stack();
-			LibraryName = null;
-			SourceAtoms = p_SourceAtoms;
+        private readonly string[] ReservedWords = new string[] {"@", "?", "!", "+!", "DUP", "-DUP", "DROP",
+                                                        "SWAP", "OVER", "ROT", ".", "+", "-", "*",
+                                                        "/", ">R", "R>", "I", "I'", "J", "MOD", "/MOD", "*/",
+                                                        "*/MOD", "MINUS", "ABS", "MIN", "MAX", "1+",
+                                                        "2+", "0=", "0<", "=", "<", ">", "<>", "AND",
+                                                        "OR", "XOR", "EMIT", "CR", "SPACE", "SPACES",
+                                                        "TYPE", "FILL", "ERASE", "BLANKS", "CMOVE", "KEY",
+                                                        "EXPECT", "PAD", "S0", "R0",
+                                                        "SP@", "SP!", "RP@", "RP!", "TIB", "QUERY",
+                                                        "STR2INT", "IF", "ELSE", "THEN", "DO", "LOOP",
+                                                        "+LOOP", "LEAVE", "BEGIN", "INT2STR",
+                                                        "AGAIN", "UNTIL", "WHILE", "REPEAT", "CASE", "OF", "ENDOF",
+                                                        "ENDCASE", "COUNT", "EXIT", "EXTERN", "CONSTANT",
+                                                        "VARIABLE", "ALLOT", "LIBRARY", "LOAD"};
 
-			InWordDefinition = false;
-			MainDefined = false;			
-		}
+        // ForthSyntacticAnalyzer constructor
+        public SyntacticAnalyzer(List<ForthAtom> p_SourceAtoms)
+        {
+            // Initialize variables
+            this.GlobalVariables = new List<ForthVariable>();
+            this.LocalVariables = new List<ForthLocalVariable>();
+            this.GlobalConstants = new List<ForthConstant>();
+            this.Words = new List<ForthWord>();
+            this.ExternalWords = new List<ExternalWord>();
+            this.SourceStack = new Stack();
+            this.LibraryName = null;
+            this.SourceAtoms = p_SourceAtoms;
+
+            this.InWordDefinition = false;
+            this.MainDefined = false;
+        }
 
         /// <summary>
         /// Get the meta information generated by the syntactic analyzer
         /// </summary>
         /// <returns>Compiler metadata.</returns>
         public CompilerMetadata GetMetaData()
-		{
+        {
             // Analyze source atoms
             try
             {
-                DoAnalysis();
+                this.DoAnalysis();
             }
             catch (InvalidOperationException)
             {
-                RaiseException(SyntacticExceptionType._EUnexpectedEndOfFile, ((ForthAtom)SourceAtoms[0]));
+                this.RaiseException(SyntacticExceptionType.UnexpectedEndOfFile, this.SourceAtoms[0]);
             }
 
             return new CompilerMetadata
-            {                
+            {
                 GlobalConstants = GlobalConstants,
                 GlobalVariables = GlobalVariables,
                 LocalVariables = LocalVariables,
@@ -100,362 +88,590 @@ namespace DeltaForth.SyntacticAnalyzer
                 ExternalWords = ExternalWords,
                 LibraryName = LibraryName
             };
-		}
+        }
 
-		// IsReserved - Checkes whether a specified word is reserved
-		// Input:  WordName - the name of the atom
-		// Output: Returns true if the specified word is reserved
-		private bool IsReserved(string WordName)
-		{
-			bool reserved = false;
-			WordName = WordName.ToLower();
-			for(int i = 0; i < ReservedWords.Length; i++)
-			{
-				if(ReservedWords[i].ToLower() == WordName)
-				{
-					reserved = true;
-					break;
-				}
-			}
-			return reserved;
+        // IsReserved - Checkes whether a specified word is reserved
+        // Input:  WordName - the name of the atom
+        // Output: Returns true if the specified word is reserved
+        private bool IsReserved(string WordName)
+        {
+            var reserved = false;
+            WordName = WordName.ToLower();
+            for (var i = 0; i < this.ReservedWords.Length; i++)
+            {
+                if (this.ReservedWords[i].ToLower() == WordName)
+                {
+                    reserved = true;
+                    break;
+                }
+            }
+            return reserved;
 
-		}
+        }
 
-		// IsConstOrVar - Checkes whether a specified word is a constant or a variable
-		// Input:  Atom - the name of the atom
-		// Output: Returns true if the specified word is a constant or a variable
-		private bool IsConstOrVar(string Atom)
-		{
-			bool bConstOrVar = false;
-			// Search constant name space
-			for(int i = 0; i < GlobalConstants.Count; i++)
-			{
-				ForthConstant fc = (ForthConstant)GlobalConstants[i];
-				if(fc.Name.ToUpper() == Atom.ToUpper()) bConstOrVar = true;
-			}
-			// Search variable name space
-			for(int i = 0; i < GlobalVariables.Count; i++)
-			{
-				ForthVariable fv = (ForthVariable)GlobalVariables[i];
-				if(fv.Name.ToUpper() == Atom.ToUpper()) bConstOrVar = true;
-			}
+        // IsConstOrVar - Checkes whether a specified word is a constant or a variable
+        // Input:  Atom - the name of the atom
+        // Output: Returns true if the specified word is a constant or a variable
+        private bool IsConstOrVar(string Atom)
+        {
+            var bConstOrVar = false;
+            // Search constant name space
+            for (var i = 0; i < this.GlobalConstants.Count; i++)
+            {
+                var fc = this.GlobalConstants[i];
+                if (fc.Name.ToUpper() == Atom.ToUpper())
+                {
+                    bConstOrVar = true;
+                }
+            }
+            // Search variable name space
+            for (var i = 0; i < this.GlobalVariables.Count; i++)
+            {
+                var fv = this.GlobalVariables[i];
+                if (fv.Name.ToUpper() == Atom.ToUpper())
+                {
+                    bConstOrVar = true;
+                }
+            }
 
-			return bConstOrVar;
-		}
+            return bConstOrVar;
+        }
 
-		// IsIdentifier - Checkes whether a specified atom is a properly named identifier
-		// Input:  Identifier - the name of the atom
-		// Output: Returns true if the atom is an identifier
-		private bool IsIdentifier(string atom)
-		{
-			if(atom.Length > 31) return false;						// The atom should not be longer than 31 characters
-			if((atom[0] >= '0') && (atom[0] <= '9')) return false;	// The first character cannot be a figure
-			if(IsReserved(atom)) return false;						// The atom should not be a reserved name
-			return true;
-		}
+        // IsIdentifier - Checkes whether a specified atom is a properly named identifier
+        // Input:  Identifier - the name of the atom
+        // Output: Returns true if the atom is an identifier
+        private bool IsIdentifier(string atom)
+        {
+            if (atom.Length > 31)
+            {
+                return false;                      // The atom should not be longer than 31 characters
+            }
 
-		// IsNumber - Checkes whether a specified atom is a number
-		// Input:  Identifier - the name of the atom
-		// Output: Returns true if the specified word is a number
-		private bool IsNumber(string atom)
-		{
-			try 
-			{
-				Convert.ToInt32(atom);
-			} 
-			catch(Exception) 
-			{
-				return false;
-			}
-			return true;
-		}
+            if ((atom[0] >= '0') && (atom[0] <= '9'))
+            {
+                return false;  // The first character cannot be a figure
+            }
 
-		// IsString - Checkes whether a specified atom is a string (should include the quotation marks)
-		// Input:  Identifier - the name of the atom
-		// Output: Returns true if the specified word is a string
-		private bool IsString(string atom)
-		{
-			Regex reg = new Regex("\".*\"");	// Matches any string between quotation marks
-			Match match = reg.Match(atom);
-			return match.Success;
-		}
+            if (this.IsReserved(atom))
+            {
+                return false;                      // The atom should not be a reserved name
+            }
 
-		// DoAnalysis - Builds up the word, constant and variable lists
-		// Input:  None
-		// Output: None (Globally changes GlobalVariables, GlobalConstants, LocalVariables, Words)
-		private void DoAnalysis()
-		{
-			ForthAtom Atom, NextAtom;
-			ForthWord WordDef = null;	// Holds the definition of a word
-			string temp;
-			int noIFs = 0;		// Number of IF statements
-			int noDOs = 0;		// Number of DO statements
-			int noBEGINs = 0;	// Number of BEGIN statements
-			int noWHILEs = 0;	// Number of WHILE statements
-			int noCASEs = 0;	// Number of CASE statements
-			int noOFs = 0;		// Number of OF statements
+            return true;
+        }
 
-			// Define enumerator for the source atoms list
-			IEnumerator saEnum = SourceAtoms.GetEnumerator();
-			while(saEnum.MoveNext())
-			{
-				Atom = (ForthAtom)saEnum.Current;
-				// If the atom does not start with " or ." make the atom upper case
-				if(!Atom.Name.StartsWith(".\"") && !Atom.Name.StartsWith("\""))
-					Atom.Name = Atom.Name.ToUpper();
-				// Process atoms
-				switch(Atom.Name)
-				{
-					case "EXTERN":	// Store information after EXTERN for calling methods at runtime
-                        if (InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareOutsideWords, Atom);
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						string ForthWord = NextAtom.Name;		// Forth word name
-                        if (IsReserved(ForthWord)) RaiseException(SyntacticExceptionType._EReservedWord, NextAtom);
-                        if (!IsIdentifier(ForthWord)) RaiseException(SyntacticExceptionType._EInvalidIdentifier, NextAtom);
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						string FileName = NextAtom.Name;		// Library name
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						string Callee = NextAtom.Name;
-						int DotPos = Callee.LastIndexOf('.');
-						string ClassName = Callee.Substring(0, DotPos);
-						string MethodName = Callee.Substring(DotPos + 1);
-                        ExternalWords.Add(new ExternalWord { Name = ForthWord, Library = FileName, Class = ClassName, Method = MethodName });
-						break;
-					case "LIBRARY":	// Store next atom as the name of the library
-                        if (InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareOutsideWords, Atom);
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						string libname = NextAtom.Name;
-						if(IsReserved(libname)) RaiseException(SyntacticExceptionType._EReservedWord, NextAtom);
-						if(!IsIdentifier(libname)) RaiseException(SyntacticExceptionType._EInvalidIdentifier, NextAtom);
-						LibraryName = libname;
-						break;
-					case "CONSTANT": // Associate the value on the global stack to the next atom
-						if(InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareOutsideWords, Atom);
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						if(IsReserved(NextAtom.Name)) RaiseException(SyntacticExceptionType._EReservedWord, NextAtom);
-						if(!IsIdentifier(NextAtom.Name)) RaiseException(SyntacticExceptionType._EInvalidIdentifier, NextAtom);
-						if(IsConstOrVar(NextAtom.Name)) RaiseException(SyntacticExceptionType._EDuplicateConst, NextAtom);
-						if(SourceStack.Count == 0) RaiseException(SyntacticExceptionType._EUnableToDefineConst, NextAtom);
-						GlobalConstants.Add(new ForthConstant{Name = NextAtom.Name, Value = SourceStack.Pop()}); // Add constant definiton to the list
-						break;
-					case "VARIABLE": // The next atom is the variable name with the initial size of 1
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						if(IsReserved(NextAtom.Name)) RaiseException(SyntacticExceptionType._EReservedWord, NextAtom);
-						if(!IsIdentifier(NextAtom.Name)) RaiseException(SyntacticExceptionType._EInvalidIdentifier, NextAtom);
-						if(IsConstOrVar(NextAtom.Name)) RaiseException(SyntacticExceptionType._EDuplicateVar, NextAtom);
-						if(!InWordDefinition) 
-						{
-                            GlobalVariables.Add(new ForthVariable { Name = NextAtom.Name, Size = 1 });
-						}
-						else 
-						{
-                            LocalVariables.Add(new ForthLocalVariable { Name = NextAtom.Name, WordName = WordDef.Name });
-						}
-						break;
-					case "ALLOT": // The last number on the stack is the additional size for the last defined variable
-						if(InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareOutsideWords, Atom);
-						if(SourceStack.Count == 0) RaiseException(SyntacticExceptionType._EUnableToAllocVar, Atom);			
-						if(SourceStack.Peek().GetType() != typeof(int)) RaiseException(SyntacticExceptionType._EWrongAllotConstType, Atom);
-						int AllotSize = (int)SourceStack.Pop();	// Get the ALLOT size
-						// Change the size of the last defined variable
-						int LastVarPos = GlobalVariables.Count - 1;	// Get the position of the last variable we defined
-						ForthVariable fv = (ForthVariable)(GlobalVariables[LastVarPos]);
-						fv.Size += AllotSize;
-						GlobalVariables[LastVarPos] = fv;	// Update changes in list
-						break;
-					case ":": // Begin word definition
-						if(InWordDefinition) RaiseException(SyntacticExceptionType._ENestedWordsNotAllowed, Atom);
-						saEnum.MoveNext();	// Advance to next atom
-						NextAtom = ((ForthAtom)saEnum.Current);
-						NextAtom.Name = NextAtom.Name.ToUpper();
-						if(IsReserved(NextAtom.Name)) RaiseException(SyntacticExceptionType._EReservedWord, NextAtom);
-						if(!IsIdentifier(NextAtom.Name)) RaiseException(SyntacticExceptionType._EInvalidIdentifier, NextAtom);
-						InWordDefinition = true;	// Signal beginning of word definition
-						WordDef = new ForthWord{Name = NextAtom.Name};		// Alloc here the structure, we fill it later
-						if(NextAtom.Name == "MAIN") MainDefined = true;
-						break;
-					case ";": // End word definition
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						// All control structures should be terminated by now
-						if((noIFs > 0) || (noDOs > 0) || (noBEGINs > 0) || (noWHILEs > 0) || (noCASEs > 0))
-							RaiseException(SyntacticExceptionType._EUnfinishedControlStruct, Atom);
-						Words.Add(WordDef);	// Add word to the list
-						InWordDefinition = false;	// Signal end of word definition
-						break;
-					case "IF": // IF statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						noIFs++;
-						goto default;
-					case "ELSE": // ELSE statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noIFs == 0) RaiseException(SyntacticExceptionType._EMalformedIETStruct, Atom);
-						goto default;
-					case "THEN": // THEN statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noIFs == 0) RaiseException(SyntacticExceptionType._EMalformedIETStruct, Atom);
-						noIFs--;
-						goto default;
-					case "DO": // DO statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						noDOs++;
-						goto default;
-					case "LOOP": // LOOP statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noDOs == 0) RaiseException(SyntacticExceptionType._EMalformedDLStruct, Atom);
-						noDOs--;
-						goto default;
-					case "+LOOP": // +LOOP statement
-						goto case "LOOP";
-					case "LEAVE": // LEAVE statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noDOs == 0) RaiseException(SyntacticExceptionType._EMalformedDLStruct, Atom);
-						goto default;
-					case "BEGIN": // BEGIN statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						noBEGINs++;
-						goto default;
-					case "WHILE": // WHILE statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noBEGINs == 0) RaiseException(SyntacticExceptionType._EMalformedBWRStruct, Atom);
-						noWHILEs++;
-						goto default;
-					case "REPEAT": // REPEAT statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if((noBEGINs == 0) || (noWHILEs == 0)) RaiseException(SyntacticExceptionType._EMalformedBWRStruct, Atom);
-						noBEGINs--;
-						noWHILEs--;
-						goto default;
-					case "AGAIN": // AGAIN statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noBEGINs == 0) RaiseException(SyntacticExceptionType._EMalformedBAStruct, Atom);
-						noBEGINs--;
-						goto default;
-					case "UNTIL": // UNTIL statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noBEGINs == 0) RaiseException(SyntacticExceptionType._EMalformedBUStruct, Atom);
-						noBEGINs--;
-						goto default;
-					case "CASE": // CASE statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						noCASEs++;
-						goto default;
-					case "OF": // OF statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noCASEs == 0) RaiseException(SyntacticExceptionType._EMalformedCOEStruct, Atom);
-						noOFs++;
-						goto default;
-					case "ENDOF": // ENDOF statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noOFs == 0) RaiseException(SyntacticExceptionType._EMalformedCOEStruct, Atom);
-						noOFs--;
-						goto default;
-					case "ENDCASE": // ENDCASE statement
-						if(!InWordDefinition) RaiseException(SyntacticExceptionType._EDeclareInsideWords, Atom);
-						if(noOFs > 0) RaiseException(SyntacticExceptionType._EMalformedCOEStruct, Atom);
-						noCASEs--;
-						goto default;
-					default: 
-						temp = Atom.Name;	// Get the atom name
-						if(InWordDefinition)
-						{
-							WordDef.Definition.Add(temp);	// Add atom to word definition
-						}
-						else 
-						{
-							// The atom should now be a constant previously defined, a number or a string
-							int ConstValue;		// Here we hold the value of the constant, in case we find it
-							if(GetConstIntValue(temp, out ConstValue)) SourceStack.Push(ConstValue);
-							else if(IsNumber(temp)) SourceStack.Push(Convert.ToInt32(temp));
-							else if(IsString(temp)) SourceStack.Push(temp.Trim(new char[] {'"'}));
-							else RaiseException(SyntacticExceptionType._EInvalidIdentifier, Atom);
-						}
-						break;
-				}
-			}
-			// Check whether word MAIN is defined
-			if(MainDefined == false) RaiseException(SyntacticExceptionType._EMainNotDefined);
-		}
+        // IsNumber - Checkes whether a specified atom is a number
+        // Input:  Identifier - the name of the atom
+        // Output: Returns true if the specified word is a number
+        private bool IsNumber(string atom)
+        {
+            try
+            {
+                Convert.ToInt32(atom);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
 
-		// GetConstIntValue - Retrieves the value of an integer constant (if found)
-		// Input:  ConstName - the name of the constant
-		// Output: ConstValue - The integer value of the constant
-		private bool GetConstIntValue(string ConstName, out int ConstValue)
-		{
-			bool ConstFound = false;
-			ConstValue = 0;
+        // IsString - Checkes whether a specified atom is a string (should include the quotation marks)
+        // Input:  Identifier - the name of the atom
+        // Output: Returns true if the specified word is a string
+        private bool IsString(string atom)
+        {
+            var reg = new Regex("\".*\"");    // Matches any string between quotation marks
+            var match = reg.Match(atom);
+            return match.Success;
+        }
 
-			IEnumerator ConstEnum = GlobalConstants.GetEnumerator();
-			while(ConstEnum.MoveNext())
-			{
-				ForthConstant fc = (ForthConstant)ConstEnum.Current;
-				if((fc.Name.ToLower() == ConstName.ToLower()) && (fc.Value.GetType() == typeof(int))) 
-				{
-					ConstValue = (int)fc.Value;
-					ConstFound = true;
-				}
-			}
-			return ConstFound;
-		}
+        // DoAnalysis - Builds up the word, constant and variable lists
+        // Input:  None
+        // Output: None (Globally changes GlobalVariables, GlobalConstants, LocalVariables, Words)
+        private void DoAnalysis()
+        {
+            ForthAtom Atom, NextAtom;
+            ForthWord WordDef = null;   // Holds the definition of a word
+            string temp;
+            var noIFs = 0;      // Number of IF statements
+            var noDOs = 0;      // Number of DO statements
+            var noBEGINs = 0;   // Number of BEGIN statements
+            var noWHILEs = 0;   // Number of WHILE statements
+            var noCASEs = 0;    // Number of CASE statements
+            var noOFs = 0;      // Number of OF statements
 
-		// RaiseException - Throws a specified exception
-		// Input:  SyntacticExceptionType - the code of the exception to be thrown
-		//         ForthAtom - the atom (with file name and line number) that caused the error
-		// Output: None
-		// Overloads: 1
-		private void RaiseException(SyntacticExceptionType exc)
-		{
-            ForthAtom atom = new ForthAtom { Name = string.Empty, FileName = string.Empty, LineNumber = 0 };	// Create an "empty" atom
-			RaiseException(exc, atom);
-		}
+            // Define enumerator for the source atoms list
+            IEnumerator saEnum = this.SourceAtoms.GetEnumerator();
+            while (saEnum.MoveNext())
+            {
+                Atom = (ForthAtom)saEnum.Current;
+                // If the atom does not start with " or ." make the atom upper case
+                if (!Atom.Name.StartsWith(".\"") && !Atom.Name.StartsWith("\""))
+                {
+                    Atom.Name = Atom.Name.ToUpper();
+                }
+                // Process atoms
+                switch (Atom.Name)
+                {
+                    case "EXTERN":  // Store information after EXTERN for calling methods at runtime
+                        if (this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareOutsideWords, Atom);
+                        }
+
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        var ForthWord = NextAtom.Name;       // Forth word name
+                        if (this.IsReserved(ForthWord))
+                        {
+                            this.RaiseException(SyntacticExceptionType.ReservedWord, NextAtom);
+                        }
+
+                        if (!this.IsIdentifier(ForthWord))
+                        {
+                            this.RaiseException(SyntacticExceptionType.InvalidIdentifier, NextAtom);
+                        }
+
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        var FileName = NextAtom.Name;        // Library name
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        var Callee = NextAtom.Name;
+                        var DotPos = Callee.LastIndexOf('.');
+                        var ClassName = Callee.Substring(0, DotPos);
+                        var MethodName = Callee.Substring(DotPos + 1);
+                        this.ExternalWords.Add(new ExternalWord { Name = ForthWord, Library = FileName, Class = ClassName, Method = MethodName });
+                        break;
+                    case "LIBRARY": // Store next atom as the name of the library
+                        if (this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareOutsideWords, Atom);
+                        }
+
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        var libname = NextAtom.Name;
+                        if (this.IsReserved(libname))
+                        {
+                            this.RaiseException(SyntacticExceptionType.ReservedWord, NextAtom);
+                        }
+
+                        if (!this.IsIdentifier(libname))
+                        {
+                            this.RaiseException(SyntacticExceptionType.InvalidIdentifier, NextAtom);
+                        }
+
+                        this.LibraryName = libname;
+                        break;
+                    case "CONSTANT": // Associate the value on the global stack to the next atom
+                        if (this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareOutsideWords, Atom);
+                        }
+
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        if (this.IsReserved(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.ReservedWord, NextAtom);
+                        }
+
+                        if (!this.IsIdentifier(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.InvalidIdentifier, NextAtom);
+                        }
+
+                        if (this.IsConstOrVar(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.DuplicateConst, NextAtom);
+                        }
+
+                        if (this.SourceStack.Count == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.UnableToDefineConst, NextAtom);
+                        }
+
+                        this.GlobalConstants.Add(new ForthConstant { Name = NextAtom.Name, Value = this.SourceStack.Pop() }); // Add constant definiton to the list
+                        break;
+                    case "VARIABLE": // The next atom is the variable name with the initial size of 1
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        if (this.IsReserved(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.ReservedWord, NextAtom);
+                        }
+
+                        if (!this.IsIdentifier(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.InvalidIdentifier, NextAtom);
+                        }
+
+                        if (this.IsConstOrVar(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.DuplicateVar, NextAtom);
+                        }
+
+                        if (!this.InWordDefinition)
+                        {
+                            this.GlobalVariables.Add(new ForthVariable { Name = NextAtom.Name, Size = 1 });
+                        }
+                        else
+                        {
+                            this.LocalVariables.Add(new ForthLocalVariable { Name = NextAtom.Name, WordName = WordDef.Name });
+                        }
+                        break;
+                    case "ALLOT": // The last number on the stack is the additional size for the last defined variable
+                        if (this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareOutsideWords, Atom);
+                        }
+
+                        if (this.SourceStack.Count == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.UnableToAllocVar, Atom);
+                        }
+
+                        if (this.SourceStack.Peek().GetType() != typeof(int))
+                        {
+                            this.RaiseException(SyntacticExceptionType.WrongAllotConstType, Atom);
+                        }
+
+                        var AllotSize = (int)this.SourceStack.Pop(); // Get the ALLOT size
+                        // Change the size of the last defined variable
+                        var LastVarPos = this.GlobalVariables.Count - 1; // Get the position of the last variable we defined
+                        var fv = this.GlobalVariables[LastVarPos];
+                        fv.Size += AllotSize;
+                        this.GlobalVariables[LastVarPos] = fv;   // Update changes in list
+                        break;
+                    case ":": // Begin word definition
+                        if (this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.NestedWordsNotAllowed, Atom);
+                        }
+
+                        saEnum.MoveNext();  // Advance to next atom
+                        NextAtom = ((ForthAtom)saEnum.Current);
+                        NextAtom.Name = NextAtom.Name.ToUpper();
+                        if (this.IsReserved(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.ReservedWord, NextAtom);
+                        }
+
+                        if (!this.IsIdentifier(NextAtom.Name))
+                        {
+                            this.RaiseException(SyntacticExceptionType.InvalidIdentifier, NextAtom);
+                        }
+
+                        this.InWordDefinition = true;    // Signal beginning of word definition
+                        WordDef = new ForthWord { Name = NextAtom.Name };      // Alloc here the structure, we fill it later
+                        if (NextAtom.Name == "MAIN")
+                        {
+                            this.MainDefined = true;
+                        }
+
+                        break;
+                    case ";": // End word definition
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+                        // All control structures should be terminated by now
+                        if ((noIFs > 0) || (noDOs > 0) || (noBEGINs > 0) || (noWHILEs > 0) || (noCASEs > 0))
+                        {
+                            this.RaiseException(SyntacticExceptionType.UnfinishedControlStruct, Atom);
+                        }
+
+                        this.Words.Add(WordDef); // Add word to the list
+                        this.InWordDefinition = false;   // Signal end of word definition
+                        break;
+                    case "IF": // IF statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        noIFs++;
+                        goto default;
+                    case "ELSE": // ELSE statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noIFs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedIETStruct, Atom);
+                        }
+
+                        goto default;
+                    case "THEN": // THEN statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noIFs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedIETStruct, Atom);
+                        }
+
+                        noIFs--;
+                        goto default;
+                    case "DO": // DO statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        noDOs++;
+                        goto default;
+                    case "LOOP": // LOOP statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noDOs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedDLStruct, Atom);
+                        }
+
+                        noDOs--;
+                        goto default;
+                    case "+LOOP": // +LOOP statement
+                        goto case "LOOP";
+                    case "LEAVE": // LEAVE statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noDOs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedDLStruct, Atom);
+                        }
+
+                        goto default;
+                    case "BEGIN": // BEGIN statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        noBEGINs++;
+                        goto default;
+                    case "WHILE": // WHILE statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noBEGINs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedBWRStruct, Atom);
+                        }
+
+                        noWHILEs++;
+                        goto default;
+                    case "REPEAT": // REPEAT statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if ((noBEGINs == 0) || (noWHILEs == 0))
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedBWRStruct, Atom);
+                        }
+
+                        noBEGINs--;
+                        noWHILEs--;
+                        goto default;
+                    case "AGAIN": // AGAIN statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noBEGINs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedBAStruct, Atom);
+                        }
+
+                        noBEGINs--;
+                        goto default;
+                    case "UNTIL": // UNTIL statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noBEGINs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedBUStruct, Atom);
+                        }
+
+                        noBEGINs--;
+                        goto default;
+                    case "CASE": // CASE statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        noCASEs++;
+                        goto default;
+                    case "OF": // OF statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noCASEs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedCOEStruct, Atom);
+                        }
+
+                        noOFs++;
+                        goto default;
+                    case "ENDOF": // ENDOF statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noOFs == 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedCOEStruct, Atom);
+                        }
+
+                        noOFs--;
+                        goto default;
+                    case "ENDCASE": // ENDCASE statement
+                        if (!this.InWordDefinition)
+                        {
+                            this.RaiseException(SyntacticExceptionType.DeclareInsideWords, Atom);
+                        }
+
+                        if (noOFs > 0)
+                        {
+                            this.RaiseException(SyntacticExceptionType.MalformedCOEStruct, Atom);
+                        }
+
+                        noCASEs--;
+                        goto default;
+                    default:
+                        temp = Atom.Name;   // Get the atom name
+                        if (this.InWordDefinition)
+                        {
+                            WordDef.Definition.Add(temp);   // Add atom to word definition
+                        }
+                        else
+                        {
+                            // The atom should now be a constant previously defined, a number or a string
+                            // Here we hold the value of the constant, in case we find it
+                            if (this.GetConstIntValue(temp, out var ConstValue))
+                            {
+                                this.SourceStack.Push(ConstValue);
+                            }
+                            else if (this.IsNumber(temp))
+                            {
+                                this.SourceStack.Push(Convert.ToInt32(temp));
+                            }
+                            else if (this.IsString(temp))
+                            {
+                                this.SourceStack.Push(temp.Trim(new char[] { '"' }));
+                            }
+                            else
+                            {
+                                this.RaiseException(SyntacticExceptionType.InvalidIdentifier, Atom);
+                            }
+                        }
+                        break;
+                }
+            }
+            // Check whether word MAIN is defined
+            if (this.MainDefined == false)
+            {
+                this.RaiseException(SyntacticExceptionType.MainNotDefined);
+            }
+        }
+
+        // GetConstIntValue - Retrieves the value of an integer constant (if found)
+        // Input:  ConstName - the name of the constant
+        // Output: ConstValue - The integer value of the constant
+        private bool GetConstIntValue(string ConstName, out int ConstValue)
+        {
+            var ConstFound = false;
+            ConstValue = 0;
+
+            IEnumerator ConstEnum = this.GlobalConstants.GetEnumerator();
+            while (ConstEnum.MoveNext())
+            {
+                var fc = (ForthConstant)ConstEnum.Current;
+                if ((fc.Name.ToLower() == ConstName.ToLower()) && (fc.Value.GetType() == typeof(int)))
+                {
+                    ConstValue = (int)fc.Value;
+                    ConstFound = true;
+                }
+            }
+            return ConstFound;
+        }
+
+        // RaiseException - Throws a specified exception
+        // Input:  SyntacticExceptionType - the code of the exception to be thrown
+        //         ForthAtom - the atom (with file name and line number) that caused the error
+        // Output: None
+        // Overloads: 1
+        private void RaiseException(SyntacticExceptionType exc)
+        {
+            var atom = new ForthAtom { Name = string.Empty, FileName = string.Empty, LineNumber = 0 };    // Create an "empty" atom
+            this.RaiseException(exc, atom);
+        }
 
         private void RaiseException(SyntacticExceptionType exc, ForthAtom atom)
-		{
-			switch(exc) 
-			{
-				case SyntacticExceptionType._EDeclareOutsideWords:
-					throw new Exception(atom.Name + " should be declared outside words. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EDeclareInsideWords:
-					throw new Exception(atom.Name + " should be declared inside words. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EReservedWord:
-					throw new Exception(atom.Name + " is a reserved identifier. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EInvalidIdentifier:
-					throw new Exception(atom.Name + " is an invalid identifier. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EUnableToDefineConst:
-					throw new Exception("Unable to define constant " + atom.Name + ". Number or string required before CONSTANT. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EUnableToAllocVar:
-					throw new Exception("Unable to alloc variable space " + atom.Name + ". Number needed before ALLOT. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EUnexpectedEndOfFile:
-					throw new Exception("Unexpected end of file " + atom.FileName + ".");
-				case SyntacticExceptionType._EWrongAllotConstType:
-					throw new Exception("Wrong constant type specified for ALLOT. Use an integer. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._ENestedWordsNotAllowed:
-					throw new Exception("Nested words are not allowed. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMalformedBWRStruct:
-					throw new Exception("Malformed BEGIN-WHILE-REPEAT control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMalformedBAStruct:
-					throw new Exception("Malformed BEGIN-AGAIN control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMalformedBUStruct:
-					throw new Exception("Malformed BEGIN-UNTIL control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMalformedIETStruct:
-					throw new Exception("Malformed IF-ELSE-THEN control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMalformedCOEStruct:
-					throw new Exception("Malformed CASE-OF-ENDCASE control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EUnfinishedControlStruct:
-					throw new Exception("Control structures must be terminated before ';'. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EMainNotDefined:
-					throw new Exception("Program starting point is missing. Please define the word MAIN.");
-				case SyntacticExceptionType._EDuplicateConst:
-					throw new Exception("Constant redefines an already defined constant or variable. (" + atom.FileName + ":" + atom.LineNumber + ")");
-				case SyntacticExceptionType._EDuplicateVar:
-					throw new Exception("Variable redefines an already defined constant or variable. (" + atom.FileName + ":" + atom.LineNumber + ")");
-			}
-		}
-
-	}	
+        {
+            switch (exc)
+            {
+                case SyntacticExceptionType.DeclareOutsideWords:
+                    throw new Exception(atom.Name + " should be declared outside words. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.DeclareInsideWords:
+                    throw new Exception(atom.Name + " should be declared inside words. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.ReservedWord:
+                    throw new Exception(atom.Name + " is a reserved identifier. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.InvalidIdentifier:
+                    throw new Exception(atom.Name + " is an invalid identifier. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.UnableToDefineConst:
+                    throw new Exception("Unable to define constant " + atom.Name + ". Number or string required before CONSTANT. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.UnableToAllocVar:
+                    throw new Exception("Unable to alloc variable space " + atom.Name + ". Number needed before ALLOT. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.UnexpectedEndOfFile:
+                    throw new Exception("Unexpected end of file " + atom.FileName + ".");
+                case SyntacticExceptionType.WrongAllotConstType:
+                    throw new Exception("Wrong constant type specified for ALLOT. Use an integer. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.NestedWordsNotAllowed:
+                    throw new Exception("Nested words are not allowed. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MalformedBWRStruct:
+                    throw new Exception("Malformed BEGIN-WHILE-REPEAT control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MalformedBAStruct:
+                    throw new Exception("Malformed BEGIN-AGAIN control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MalformedBUStruct:
+                    throw new Exception("Malformed BEGIN-UNTIL control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MalformedIETStruct:
+                    throw new Exception("Malformed IF-ELSE-THEN control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MalformedCOEStruct:
+                    throw new Exception("Malformed CASE-OF-ENDCASE control structure. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.UnfinishedControlStruct:
+                    throw new Exception("Control structures must be terminated before ';'. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.MainNotDefined:
+                    throw new Exception("Program starting point is missing. Please define the word MAIN.");
+                case SyntacticExceptionType.DuplicateConst:
+                    throw new Exception("Constant redefines an already defined constant or variable. (" + atom.FileName + ":" + atom.LineNumber + ")");
+                case SyntacticExceptionType.DuplicateVar:
+                    throw new Exception("Variable redefines an already defined constant or variable. (" + atom.FileName + ":" + atom.LineNumber + ")");
+            }
+        }
+    }
 }

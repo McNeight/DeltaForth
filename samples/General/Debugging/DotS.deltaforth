@@ -1,0 +1,21 @@
+(   File:	DotS.deltaforth
+ Summary:	The .S word: shows the content of the parameter stack.
+ License:	CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+: main
+1 2 0 4 10 .S
+;
+
+: .S
+	."Number of elements on the stack: "
+	sp@ s0 - dup . cr
+	0 > if
+	."Stack elements: "
+	sp@ 1 - s0 do
+		i @ . space
+	loop
+	then
+	cr
+;

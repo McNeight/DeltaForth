@@ -1,0 +1,17 @@
+(   File: Constants.deltaforth
+ Summary: Shows the use of integer and string constants.
+ License: CC0
+
+ This file is part of the DeltaForth Code Samples. )
+
+30 constant cint1			\ Integer constant
+76 constant cint2			\ Integer constant
+"The sum is " constant cstr	\ String constant
+
+: main						\ Entry point
+	tib cstr				\ Dumps the text in 'cstr' to the
+							\   address pointed by TIB
+	tib dup count type		\ Types the text at TIB
+	cint1 cint2 +			\ Computes the constant sum
+	.						\ Displays the sum
+;
