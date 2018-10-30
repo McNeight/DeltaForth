@@ -12,6 +12,11 @@ namespace DeltaForth.Collections
     /// <summary>
     /// Definition of a word as used by the Forth syntactic analyzer.
     /// </summary>
+    /// <remarks>
+    /// Depending on context, either 1) the name of a Forth definition;
+    /// or 2) a parsed sequence of non-space characters, which could be
+    /// the name of a Forth definition.
+    /// </remarks>
     public class Word
     {
         /// <summary>
