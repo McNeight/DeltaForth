@@ -1,98 +1,114 @@
-﻿/*
- * Delta Forth .NET - World's first Forth compiler for the .NET platform
- * Copyright (C)1997-2011 Valer BOCAN, PhD, Romania (valer@bocan.ro, http://www.bocan.ro/deltaforthnet)
- * 
- * This program and its source code is distributed in the hope that it will
- * be useful. No warranty of any kind is provided.
- * Please DO NOT distribute modified copies of the source code.
- * 
- */
+﻿// <copyright file="CommandLine.cs" company="DeltaForth Contributors">
+// Copyright © 1997-2011 Valer BOCAN
+// Copyright © 2018 Neil McNeight
+// All rights reserved.
+// Licensed under the MIT license. See the LICENSE.markdown file in the project root for full license information.
+// </copyright>
 
 using System;
-using System.Collections;
 using System.IO;
 
 namespace DeltaForth
 {
-	public class CommandLine
+    /// <summary>
+    /// Command line interface to the DeltaForth compiler.
+    /// </summary>
+    public class CommandLine
     {
         #region Compiler command-line option values
-		static bool DisplayLogo, QuietMode, ShowTimings, GenerateExecutable, CheckStack, DisplayMap;
-		static int ForthStackSize = 524288, ReturnStackSize = 1024;
 
-		static string SourceFile;		// Input filename
-		static string OutputFile;	    // Output filename
-		static string OutputDirectory;	// Output directory
-		static string SignatureFile;	// Signature file (snk)        
+        private static bool displayLogo;
+        private static bool quietMode;
+        private static bool showTimings;
+        private static bool generateExecutable;
+        private static bool checkStack;
+        private static bool displayMap;
+        private static int forthStackSize = 524288;
+        private static int returnStackSize = 1024;
+        private static string sourceFile;       // Input filename
+        private static string outputFile;       // Output filename
+        private static string outputDirectory;  // Output directory
+        private static string signatureFile;    // Signature file (snk)
+
         #endregion
 
         #region Local variables
-        static DateTime CompilationTimeStart, CompilationTimeEnd;
-        static DateTime PartialTimeStart, PartialTimeEnd;
+
+        private static DateTime compilationTimeStart;
+        private static DateTime compilationTimeEnd;
+        private static DateTime partialTimeStart;
+        private static DateTime partialTimeEnd;
+
         #endregion
 
         #region Display Methods
+
         /// <summary>
-        /// Display text on the console with the specified color
+        /// Display text on the console with the specified color.
         /// </summary>
-        /// <param name="Text">Text to display to console</param>
-        /// <param name="Color">Color of the text</param>
-        static void DisplayLineToConsole(string Text, ConsoleColor Color)
+        /// <param name="text">Text to display to console.</param>
+        /// <param name="color">Color of the text.</param>
+        private static void DisplayLineToConsole(string text, ConsoleColor color)
         {
-            if (!QuietMode)
+            if (!quietMode)
             {
-                var OldConsoleColor = Console.ForegroundColor;
-                Console.ForegroundColor = Color;
-                Console.WriteLine(Text);
-                Console.ForegroundColor = OldConsoleColor;
+                var oldConsoleColor = Console.ForegroundColor;
+                Console.ForegroundColor = color;
+                Console.WriteLine(text);
+                Console.ForegroundColor = oldConsoleColor;
             }
         }
 
         /// <summary>
-        /// Display text on the console with the default color
+        /// Display text on the console with the default color.
         /// </summary>
-        /// <param name="Text">Text to display to console</param>
-        static void DisplayLineToConsole(string Text)
+        /// <param name="text">Text to display to console.</param>
+        private static void DisplayLineToConsole(string text)
         {
-            DisplayLineToConsole(Text, ConsoleColor.Gray);
+            DisplayLineToConsole(text, ConsoleColor.Gray);
         }
 
         /// <summary>
-        /// Display text on the console with the specified color
+        /// Display text on the console with the specified color.
         /// </summary>
-        /// <param name="Text">Text to display to console</param>
-        /// <param name="Color">Color of the text</param>
-        static void DisplayToConsole(string Text, ConsoleColor Color)
+        /// <param name="text">Text to display to console.</param>
+        /// <param name="color">Color of the text.</param>
+        private static void DisplayToConsole(string text, ConsoleColor color)
         {
-            if (!QuietMode)
+            if (!quietMode)
             {
-                var OldConsoleColor = Console.ForegroundColor;
-                Console.ForegroundColor = Color;
-                Console.Write(Text);
-                Console.ForegroundColor = OldConsoleColor;
+                var oldConsoleColor = Console.ForegroundColor;
+                Console.ForegroundColor = color;
+                Console.Write(text);
+                Console.ForegroundColor = oldConsoleColor;
             }
         }
 
         /// <summary>
-        /// Display text on the console with the default color
+        /// Display text on the console with the default color.
         /// </summary>
-        /// <param name="Text">Text to display to console</param>
-        static void DisplayToConsole(string Text)
+        /// <param name="text">Text to display to console.</param>
+        private static void DisplayToConsole(string text)
         {
-            DisplayToConsole(Text, ConsoleColor.Gray);
+            DisplayToConsole(text, ConsoleColor.Gray);
         }
 
-        static void DisplayLogoToConsole()
-		{
-            DisplayLineToConsole("Delta Forth .NET Compiler, Version 1.4", ConsoleColor.Yellow);
-            DisplayLineToConsole("World's first Forth compiler for the .NET platform", ConsoleColor.White);
-            DisplayLineToConsole("Copyright (C)1997-2011 Valer BOCAN, PhD <valer@bocan.ro>. All Rights Reserved.");
-            DisplayLineToConsole("Web: http://www.bocan.ro/deltaforthnet\n\r");
-		}
+        /// <summary>
+        /// Display logo on the console.
+        /// </summary>
+        private static void DisplayLogoToConsole()
+        {
+            DisplayLineToConsole("DeltaForth Compiler, Version 1.4", ConsoleColor.Yellow);
 
-		static void DisplayUsageToConsole()
-		{
-			DisplayLogoToConsole();
+            // DisplayLineToConsole("World's first Forth compiler for the .NET platform", ConsoleColor.White);
+            DisplayLineToConsole("Copyright © 1997-2011 Valer BOCAN", ConsoleColor.White);
+            DisplayLineToConsole("Copyright © 2018 Neil McNeight");
+            DisplayLineToConsole("Web: http://www.bocan.ro/deltaforthnet");
+        }
+
+        private static void DisplayUsageToConsole()
+        {
+            DisplayLogoToConsole();
             DisplayLineToConsole("Usage: DeltaForth.exe <source file> [options]", ConsoleColor.Yellow);
             DisplayLineToConsole("\n\rOptions:");
             DisplayLineToConsole("/NOLOGO\t\t\tDon't type the logo");
@@ -104,17 +120,18 @@ namespace DeltaForth
             DisplayLineToConsole("/FS:<size>\t\tSpecify Forth stack size (default is 524288 cells)");
             DisplayLineToConsole("/RS:<size>\t\tSpecify return stack size (default is 1024 cells)");
             DisplayLineToConsole("/MAP\t\t\tGenerate detailed map information");
-            DisplayLineToConsole("/OUTPUT=<targetfile>\tCompile to file with specified name\n\r\t\t\t(user must provide extension, if any)");            
+            DisplayLineToConsole("/OUTPUT=<targetfile>\tCompile to file with specified name\n\r\t\t\t(user must provide extension, if any)");
             DisplayLineToConsole("/KEY=<keyfile>\t\tCompile with strong signature\n\r\t\t\t(<keyfile> contains private key)");
             DisplayLineToConsole("\n\rDefault source file extension is .4th", ConsoleColor.Green);
-		}
-        #endregion        
+        }
 
-        static void DisplayMapInformation(Compiler compiler)
+        #endregion
+
+        private static void DisplayMapInformation(Compiler compiler)
         {
             DisplayLineToConsole(string.Empty);
             DisplayLineToConsole("Summary of compilation objects", ConsoleColor.White);
-            
+
             // Display global constants
             DisplayLineToConsole(string.Empty);
             DisplayLineToConsole("Global constants:", ConsoleColor.Blue);
@@ -163,174 +180,184 @@ namespace DeltaForth
             }
         }
 
-        static void Main(string[] args)
-		{
-			// Initialize default parameter values
-			DisplayLogo = GenerateExecutable = CheckStack = true;
-			QuietMode = ShowTimings = DisplayMap = false;
-			OutputFile = OutputDirectory = SignatureFile = string.Empty;            
+        private static void Main(string[] args)
+        {
+            // Initialize default parameter values
+            displayLogo = generateExecutable = checkStack = true;
+            quietMode = showTimings = displayMap = false;
+            outputFile = outputDirectory = signatureFile = string.Empty;
 
-			// Display usage screen if no parameters are given
-			if(args.Length < 1)
-			{
-				DisplayUsageToConsole();
-				return;
-			}
+            // Display usage screen if no parameters are given
+            if (args.Length < 1)
+            {
+                DisplayUsageToConsole();
+                return;
+            }
 
-			SourceFile = args[0];
+            sourceFile = args[0];
 
-			// Cycle through command line parameters
-            for (int i = 1; i < args.Length; i++)
+            // Cycle through command line parameters
+            for (var i = 1; i < args.Length; i++)
             {
                 switch (args[i].ToUpper())
                 {
                     case "/NOLOGO":
-                        DisplayLogo = false;
+                        displayLogo = false;
                         break;
                     case "/QUIET":
-                        QuietMode = true;
+                        quietMode = true;
                         break;
                     case "/CLOCK":
-                        ShowTimings = true;
+                        showTimings = true;
                         break;
                     case "/EXE":
-                        GenerateExecutable = true;
+                        generateExecutable = true;
                         break;
                     case "/DLL":
-                        GenerateExecutable = false;
+                        generateExecutable = false;
                         break;
                     case "/NOCHECK":
-                        CheckStack = false;
+                        checkStack = false;
                         break;
                     case "/MAP":
-                        DisplayMap = true;
+                        displayMap = true;
                         break;
                     default:
                         if (args[i].ToUpper().StartsWith("/OUTPUT="))
                         {
-                            OutputFile = args[i].Substring(8);
+                            outputFile = args[i].Substring(8);
+                        }
+                        else if (args[i].ToUpper().StartsWith("/FS:"))
+                        {
+                            try
+                            {
+                                forthStackSize = Convert.ToInt32(args[i].Substring(4));
+                            }
+                            catch (FormatException)
+                            {
+                                DisplayUsageToConsole();
+                                return;
+                            }
+                        }
+                        else if (args[i].ToUpper().StartsWith("/RS:"))
+                        {
+                            try
+                            {
+                                returnStackSize = Convert.ToInt32(args[i].Substring(4));
+                            }
+                            catch (FormatException)
+                            {
+                                DisplayUsageToConsole();
+                                return;
+                            }
+                        }
+                        else if (args[i].ToUpper().StartsWith("/KEY="))
+                        {
+                            signatureFile = args[i].Substring(5);
                         }
                         else
-                            if (args[i].ToUpper().StartsWith("/FS:"))
-                            {
-                                try
-                                {
-                                    ForthStackSize = Convert.ToInt32(args[i].Substring(4));
-                                }
-                                catch (FormatException)
-                                {
-                                    DisplayUsageToConsole();
-                                    return;
-                                }
-                            }
-                            else
-                                if (args[i].ToUpper().StartsWith("/RS:"))
-                                {
-                                    try
-                                    {
-                                        ReturnStackSize = Convert.ToInt32(args[i].Substring(4));
-                                    }
-                                    catch (FormatException)
-                                    {
-                                        DisplayUsageToConsole();
-                                        return;
-                                    }
-                                }
-                                else
-                                    if (args[i].ToUpper().StartsWith("/KEY="))
-                                    {
-                                        SignatureFile = args[i].Substring(5);
-                                    }
-                                    else
-                                    {
-                                        DisplayUsageToConsole();
-                                        return;
-                                    }
+                        {
+                            DisplayUsageToConsole();
+                            return;
+                        }
+
                         break;
                 }
             }
 
             // Process parameters
-            if (DisplayLogo) DisplayLogoToConsole();
+            if (displayLogo)
+            {
+                DisplayLogoToConsole();
+            }
 
             #region Input File Processing
+
             // If the extension for the input file is missing, add it
-            if (!Path.HasExtension(SourceFile))
+            if (!Path.HasExtension(sourceFile))
             {
-                SourceFile = Path.ChangeExtension(SourceFile, ".4th");
+                sourceFile = Path.ChangeExtension(sourceFile, ".4th");
             }
             #endregion
 
             #region Input File Existence Check
+
             // Check whether the input file really exists
-            if (!File.Exists(SourceFile))
+            if (!File.Exists(sourceFile))
             {
-                DisplayLineToConsole(string.Format("\n\rERROR: The file '{0}' could not be found.", SourceFile), ConsoleColor.Red);
+                DisplayLineToConsole(string.Format("\n\rERROR: The file '{0}' could not be found.", sourceFile), ConsoleColor.Red);
                 return;
             }
             #endregion
 
             #region Output File Processing
+
             // If there is no output file specified, generate a name for it based on the input file
-            if (OutputFile == string.Empty)
+            if (outputFile == string.Empty)
             {
-                OutputFile = Path.GetFileName(SourceFile);
-                OutputFile = Path.ChangeExtension(OutputFile, GenerateExecutable ? ".exe" : ".dll");
-                OutputDirectory = Path.GetDirectoryName(SourceFile);
-                if (OutputDirectory == string.Empty)
+                outputFile = Path.GetFileName(sourceFile);
+                outputFile = Path.ChangeExtension(outputFile, generateExecutable ? ".exe" : ".dll");
+                outputDirectory = Path.GetDirectoryName(sourceFile);
+                if (outputDirectory == string.Empty)
                 {
-                    OutputDirectory = ".";
+                    outputDirectory = ".";
                 }
             }
             else
             {
-                OutputDirectory = Path.GetDirectoryName(OutputFile);
-                if (OutputDirectory == string.Empty)
-                    OutputDirectory = null;
-                OutputFile = Path.GetFileName(OutputFile);                
-            }            
-            #endregion            
-			
-            Compiler compiler = new Compiler();
-            compiler.OnCodeGenerationStart      += new Compiler.CompilerEventHandler(compiler_OnCodeGenerationStart);
-            compiler.OnCodeGenerationEnd        += new Compiler.CompilerEventHandler(compiler_OnCodeGenerationEnd);
-            compiler.OnCompilationStart         += new Compiler.CompilerEventHandler(compiler_OnCompilationStart);
-            compiler.OnCompilationEnd           += new Compiler.CompilerEventHandler(compiler_OnCompilationEnd);
-            compiler.OnParsingEnd               += new Compiler.CompilerEventHandler(compiler_OnParsingEnd);
-            compiler.OnParsingStart             += new Compiler.CompilerEventHandler(compiler_OnParsingStart);
-            compiler.OnSyntacticAnalysisEnd     += new Compiler.CompilerEventHandler(compiler_OnSyntacticAnalysisEnd);
-            compiler.OnSyntacticAnalysisStart   += new Compiler.CompilerEventHandler(compiler_OnSyntacticAnalysisStart);
+                outputDirectory = Path.GetDirectoryName(outputFile);
+                if (outputDirectory == string.Empty)
+                {
+                    outputDirectory = null;
+                }
 
-			try 
-			{                
-				compiler.CompileFile(SourceFile, OutputFile, OutputDirectory, SignatureFile, GenerateExecutable, CheckStack, ForthStackSize, ReturnStackSize);
-			} 
-			catch(Exception e)
-			{
+                outputFile = Path.GetFileName(outputFile);
+            }
+            #endregion
+
+            var compiler = new Compiler();
+            compiler.OnCodeGenerationStart += new Compiler.CompilerEventHandler(Compiler_OnCodeGenerationStart);
+            compiler.OnCodeGenerationEnd += new Compiler.CompilerEventHandler(Compiler_OnCodeGenerationEnd);
+            compiler.OnCompilationStart += new Compiler.CompilerEventHandler(Compiler_OnCompilationStart);
+            compiler.OnCompilationEnd += new Compiler.CompilerEventHandler(Compiler_OnCompilationEnd);
+            compiler.OnParsingEnd += new Compiler.CompilerEventHandler(Compiler_OnParsingEnd);
+            compiler.OnParsingStart += new Compiler.CompilerEventHandler(Compiler_OnParsingStart);
+            compiler.OnSyntacticAnalysisEnd += new Compiler.CompilerEventHandler(Compiler_OnSyntacticAnalysisEnd);
+            compiler.OnSyntacticAnalysisStart += new Compiler.CompilerEventHandler(Compiler_OnSyntacticAnalysisStart);
+
+            try
+            {
+                compiler.CompileFile(sourceFile, outputFile, outputDirectory, signatureFile, generateExecutable, checkStack, forthStackSize, returnStackSize);
+            }
+            catch (Exception e)
+            {
                 DisplayLineToConsole("\t\tFAILED", ConsoleColor.Red);
-                DisplayLineToConsole(string.Format("\n\rCompilation error: {0}", e.Message), ConsoleColor.White);                
-				return;
-			}
-            
-            if(DisplayMap)
+                DisplayLineToConsole(string.Format("\n\rCompilation error: {0}", e.Message), ConsoleColor.White);
+                return;
+            }
+
+            if (displayMap)
+            {
                 DisplayMapInformation(compiler);
-		}
+            }
+        }
 
         #region Event Handlers
-        static void compiler_OnSyntacticAnalysisStart(object sender, object e)
+
+        private static void Compiler_OnSyntacticAnalysisStart(object sender, object e)
         {
-            PartialTimeStart = DateTime.Now;
+            partialTimeStart = DateTime.Now;
             DisplayToConsole("Starting syntactic analysis...");
         }
 
-        static void compiler_OnSyntacticAnalysisEnd(object sender, object e)
+        private static void Compiler_OnSyntacticAnalysisEnd(object sender, object e)
         {
-            PartialTimeEnd = DateTime.Now;
-            PartialTimeEnd = DateTime.Now;
-            if (ShowTimings)
+            partialTimeEnd = DateTime.Now;
+
+            if (showTimings)
             {
                 DisplayToConsole("\t\tOK", ConsoleColor.Green);
-                DisplayLineToConsole("\t(" + Math.Round((PartialTimeEnd - PartialTimeStart).TotalMilliseconds) + " ms)");
+                DisplayLineToConsole("\t(" + Math.Round((partialTimeEnd - partialTimeStart).TotalMilliseconds) + " ms)");
             }
             else
             {
@@ -338,19 +365,19 @@ namespace DeltaForth
             }
         }
 
-        static void compiler_OnParsingStart(object sender, object e)
+        private static void Compiler_OnParsingStart(object sender, object e)
         {
-            PartialTimeStart = DateTime.Now;
+            partialTimeStart = DateTime.Now;
             DisplayToConsole("Parsing source file...");
         }
 
-        static void compiler_OnParsingEnd(object sender, object e)
+        private static void Compiler_OnParsingEnd(object sender, object e)
         {
-            PartialTimeEnd = DateTime.Now;
-            if (ShowTimings)
+            partialTimeEnd = DateTime.Now;
+            if (showTimings)
             {
                 DisplayToConsole("\t\t\tOK", ConsoleColor.Green);
-                DisplayLineToConsole("\t(" + Math.Round((PartialTimeEnd - PartialTimeStart).TotalMilliseconds) + " ms)");
+                DisplayLineToConsole("\t(" + Math.Round((partialTimeEnd - partialTimeStart).TotalMilliseconds) + " ms)");
             }
             else
             {
@@ -358,21 +385,21 @@ namespace DeltaForth
             }
         }
 
-        static void compiler_OnCompilationStart(object sender, object e)
+        private static void Compiler_OnCompilationStart(object sender, object e)
         {
             DisplayLineToConsole("Starting compilation...", ConsoleColor.White);
             DisplayLineToConsole(string.Empty);
-            CompilationTimeStart = DateTime.Now;
+            compilationTimeStart = DateTime.Now;
         }
 
-        static void compiler_OnCompilationEnd(object sender, object e)
+        private static void Compiler_OnCompilationEnd(object sender, object e)
         {
-            CompilationTimeEnd = DateTime.Now;
-            if (ShowTimings)
+            compilationTimeEnd = DateTime.Now;
+            if (showTimings)
             {
                 DisplayLineToConsole(string.Empty);
                 DisplayToConsole("Compilation ended.", ConsoleColor.White);
-                DisplayLineToConsole("\t\t\t\t(" + Math.Round((CompilationTimeEnd - CompilationTimeStart).TotalMilliseconds) + " ms)");
+                DisplayLineToConsole("\t\t\t\t(" + Math.Round((compilationTimeEnd - compilationTimeStart).TotalMilliseconds) + " ms)");
             }
             else
             {
@@ -381,13 +408,13 @@ namespace DeltaForth
             }
         }
 
-        static void compiler_OnCodeGenerationEnd(object sender, object e)
+        private static void Compiler_OnCodeGenerationEnd(object sender, object e)
         {
-            PartialTimeEnd = DateTime.Now;
-            if (ShowTimings)
+            partialTimeEnd = DateTime.Now;
+            if (showTimings)
             {
                 DisplayToConsole("\t\tOK", ConsoleColor.Green);
-                DisplayLineToConsole("\t(" + Math.Round((PartialTimeEnd - PartialTimeStart).TotalMilliseconds) + " ms)");
+                DisplayLineToConsole("\t(" + Math.Round((partialTimeEnd - partialTimeStart).TotalMilliseconds) + " ms)");
             }
             else
             {
@@ -395,11 +422,11 @@ namespace DeltaForth
             }
         }
 
-        static void compiler_OnCodeGenerationStart(object sender, object e)
+        private static void Compiler_OnCodeGenerationStart(object sender, object e)
         {
-            PartialTimeStart = DateTime.Now;
+            partialTimeStart = DateTime.Now;
             DisplayToConsole("Generating executable code...");
         }
         #endregion
-    }		
+    }
 }
