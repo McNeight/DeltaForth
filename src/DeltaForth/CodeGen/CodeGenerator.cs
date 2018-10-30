@@ -2578,7 +2578,7 @@ namespace DeltaForth.CodeGen
 		// Output: None
 		private void _If(ILGenerator ilgen)
 		{
-            IFDescriptor sIF = new IFDescriptor { lbElse = ilgen.DefineLabel(), lbEnd = ilgen.DefineLabel(), bElse = false };			
+            IFDescriptor sIF = new IFDescriptor { Else = ilgen.DefineLabel(), End = ilgen.DefineLabel(), ElseUsed = false };			
 
 			ilgen.Emit(OpCodes.Ldsfld, ForthStack);
 			ilgen.Emit(OpCodes.Ldsfld, ForthStackIndex);
@@ -2587,7 +2587,7 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Dup);
 			ilgen.Emit(OpCodes.Stsfld, ForthStackIndex);
 			ilgen.Emit(OpCodes.Ldelem_I4);
-			ilgen.Emit(OpCodes.Brfalse, sIF.lbElse);
+			ilgen.Emit(OpCodes.Brfalse, sIF.Else);
 
 			IFStack.Push(sIF);
 		}
@@ -2599,9 +2599,9 @@ namespace DeltaForth.CodeGen
 		{
 			IFDescriptor sIF = IFStack.Pop();
 
-			ilgen.Emit(OpCodes.Br, sIF.lbEnd);	// Avoid executing the False branch
-			ilgen.MarkLabel(sIF.lbElse);
-			sIF.bElse = true;
+			ilgen.Emit(OpCodes.Br, sIF.End);	// Avoid executing the False branch
+			ilgen.MarkLabel(sIF.Else);
+			sIF.ElseUsed = true;
 
 			IFStack.Push(sIF);
 		}
@@ -2613,8 +2613,8 @@ namespace DeltaForth.CodeGen
 		{
 			IFDescriptor sIF = IFStack.Pop();
 
-			ilgen.MarkLabel(sIF.lbEnd);
-			if(sIF.bElse == false) ilgen.MarkLabel(sIF.lbElse);
+			ilgen.MarkLabel(sIF.End);
+			if(sIF.ElseUsed == false) ilgen.MarkLabel(sIF.Else);
 		}
 
 		// _Begin - Processes the BEGIN atom
@@ -2622,8 +2622,8 @@ namespace DeltaForth.CodeGen
 		// Output: None
 		private void _Begin(ILGenerator ilgen)
 		{
-            BEGINDescriptor sBEGIN = new BEGINDescriptor { lbBegin = ilgen.DefineLabel(), lbEnd = ilgen.DefineLabel() };			
-			ilgen.MarkLabel(sBEGIN.lbBegin);
+            BEGINDescriptor sBEGIN = new BEGINDescriptor { Begin = ilgen.DefineLabel(), End = ilgen.DefineLabel() };			
+			ilgen.MarkLabel(sBEGIN.Begin);
 			BEGINStack.Push(sBEGIN);
 		}
 
@@ -2641,7 +2641,7 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Dup);
 			ilgen.Emit(OpCodes.Stsfld, ForthStackIndex);
 			ilgen.Emit(OpCodes.Ldelem_I4);
-			ilgen.Emit(OpCodes.Brfalse, sBEGIN.lbBegin);
+			ilgen.Emit(OpCodes.Brfalse, sBEGIN.Begin);
 		}
 
 		// _Again - Processes the AGAIN atom
@@ -2650,7 +2650,7 @@ namespace DeltaForth.CodeGen
 		private void _Again(ILGenerator ilgen)
 		{
 			BEGINDescriptor sBEGIN = BEGINStack.Pop();
-			ilgen.Emit(OpCodes.Br, sBEGIN.lbBegin);
+			ilgen.Emit(OpCodes.Br, sBEGIN.Begin);
 		}
 
 		// _While - Processes the WHILE atom
@@ -2667,7 +2667,7 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Dup);
 			ilgen.Emit(OpCodes.Stsfld, ForthStackIndex);
 			ilgen.Emit(OpCodes.Ldelem_I4);
-			ilgen.Emit(OpCodes.Brfalse, sBEGIN.lbEnd);
+			ilgen.Emit(OpCodes.Brfalse, sBEGIN.End);
 		}
 
 		// _Repeat - Processes the REPEAT atom
@@ -2676,8 +2676,8 @@ namespace DeltaForth.CodeGen
 		private void _Repeat(ILGenerator ilgen)
 		{
 			BEGINDescriptor sBEGIN = BEGINStack.Pop();
-			ilgen.Emit(OpCodes.Br, sBEGIN.lbBegin);
-			ilgen.MarkLabel(sBEGIN.lbEnd);
+			ilgen.Emit(OpCodes.Br, sBEGIN.Begin);
+			ilgen.MarkLabel(sBEGIN.End);
 		}
 
 		// _Case - Processes the CASE atom
@@ -2738,11 +2738,11 @@ namespace DeltaForth.CodeGen
 		// Output: None
 		private void _Do(ILGenerator ilgen)
 		{
-            DODescriptor sDO = new DODescriptor { lbDo = ilgen.DefineLabel(), lbLoop = ilgen.DefineLabel() };
+            DODescriptor sDO = new DODescriptor { Do = ilgen.DefineLabel(), Loop = ilgen.DefineLabel() };
 			_Swap(ilgen);
 			_ToR(ilgen);
 			_ToR(ilgen);
-			ilgen.MarkLabel(sDO.lbDo);
+			ilgen.MarkLabel(sDO.Do);
 			DOStack.Push(sDO);
 		}
 
@@ -2758,7 +2758,7 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Sub);
 			ilgen.Emit(OpCodes.Stsfld, ReturnStackIndex);
 
-			ilgen.Emit(OpCodes.Br, sDO.lbLoop);
+			ilgen.Emit(OpCodes.Br, sDO.Loop);
 		}
 
 		// _Loop - Processes the LOOP atom
@@ -2785,7 +2785,7 @@ namespace DeltaForth.CodeGen
             ilgen.Emit(OpCodes.Ldc_I4_1);
             ilgen.Emit(OpCodes.Sub);
             // End of change
-            ilgen.Emit(OpCodes.Bge_S, sDO.lbLoop);
+            ilgen.Emit(OpCodes.Bge_S, sDO.Loop);
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStack);
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
 			ilgen.Emit(OpCodes.Ldc_I4_1);
@@ -2794,8 +2794,8 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Ldc_I4_1);
 			ilgen.Emit(OpCodes.Add);
 			ilgen.Emit(OpCodes.Stelem_I4);
-			ilgen.Emit(OpCodes.Br, sDO.lbDo);
-			ilgen.MarkLabel(sDO.lbLoop);
+			ilgen.Emit(OpCodes.Br, sDO.Do);
+			ilgen.MarkLabel(sDO.Loop);
 			// Clean up 2 elements from the return stack
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
 			ilgen.Emit(OpCodes.Ldc_I4_2);
@@ -2827,7 +2827,7 @@ namespace DeltaForth.CodeGen
             ilgen.Emit(OpCodes.Ldc_I4_1);
             ilgen.Emit(OpCodes.Sub);
             // End of change
-			ilgen.Emit(OpCodes.Bge_S, sDO.lbLoop);
+			ilgen.Emit(OpCodes.Bge_S, sDO.Loop);
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStack);
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
 			ilgen.Emit(OpCodes.Ldc_I4_1);
@@ -2842,8 +2842,8 @@ namespace DeltaForth.CodeGen
 			ilgen.Emit(OpCodes.Ldelem_I4);
 			ilgen.Emit(OpCodes.Add);
 			ilgen.Emit(OpCodes.Stelem_I4);
-			ilgen.Emit(OpCodes.Br, sDO.lbDo);
-			ilgen.MarkLabel(sDO.lbLoop);
+			ilgen.Emit(OpCodes.Br, sDO.Do);
+			ilgen.MarkLabel(sDO.Loop);
 			// Clean up 2 elements from the return stack
 			ilgen.Emit(OpCodes.Ldsfld, ReturnStackIndex);
 			ilgen.Emit(OpCodes.Ldc_I4_2);
