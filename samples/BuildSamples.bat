@@ -17,7 +17,8 @@ goto :eof
 :treeProcess
 for %%f in (*.deltaforth *.4th *.fth *.fr *.fs) do (
     REM Compile a DeltaForth file
-    %~dpnx1 %%f /nologo /clock
+    REM %~dpnx1 %%f /map /clock
+    %~dpnx1 %%f /nologo /quiet
 )
 for /D %%d in (*) do (
     cd %%d

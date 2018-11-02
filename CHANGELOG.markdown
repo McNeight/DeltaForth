@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added copy of MIT License.
 - Added copy of CC0 License for Forth samples.
 - Added .markdownlint.json to configure [markdownlint](https://github.com/DavidAnson/markdownlint/).
+- Added docs\DeltaForth Code Map.dgml for documentation.
 
 ### Changed
 
@@ -31,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change from using 8.3 extensions to "full length" extensions, such as
  `.markdown` and `.deltaforth`.
 - Relicense all Forth example code under samples/ to [CC0 license](http://creativecommons.org/publicdomain/zero/1.0/).
+- Cleaned up samples\*.cs and project files.
 
 ### Fixed
 
